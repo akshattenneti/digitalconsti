@@ -4,872 +4,781 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Constitutionalism: DAOs and Network States</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap');
+        
         :root {
-            --primary: #1e40af;
-            --primary-light: #3b82f6;
-            --secondary: #6366f1;
-            --accent: #93c5fd;
-            --background: #f1f5f9;
-            --dark: #0f172a;
-            --text: #1e293b;
-            --light-text: #475569;
-            --card-bg: #ffffff;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --border-radius: 8px;
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --color-primary: #1a365d;
+            --color-primary-light: #2b4c7e;
+            --color-secondary: #0ea5e9;
+            --color-secondary-light: #7dd3fc;
+            --color-accent: #0284c7;
+            --color-bg: #f8fafc;
+            --color-bg-alt: #e2e8f0;
+            --color-bg-dark: #0f172a;
+            --color-text: #1e293b;
+            --color-text-light: #64748b;
+            --color-text-inverse: #f8fafc;
+            --color-border: #cbd5e1;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+            --color-card: #ffffff;
+            
+            --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+            --gradient-secondary: linear-gradient(135deg, var(--color-secondary), var(--color-accent));
+            
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
             --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-            --transition: all 0.3s ease;
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            
+            --radius-sm: 4px;
+            --radius: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 20px;
+            
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
         }
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
-
+        
         html {
             scroll-behavior: smooth;
-            font-size: 16px;
+            scroll-padding-top: 80px;
         }
-
+        
         body {
-            background-color: var(--background);
-            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.6;
+            color: var(--color-text);
+            background: var(--color-bg);
             overflow-x: hidden;
         }
-
+        
         h1, h2, h3, h4, h5, h6 {
-            font-weight: 700;
-            color: var(--dark);
+            font-family: 'Playfair Display', Georgia, serif;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
             line-height: 1.3;
-            margin-bottom: 1.5rem;
         }
-
+        
         h1 {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
+            font-size: 3.5rem;
             font-weight: 800;
             letter-spacing: -0.025em;
             line-height: 1.1;
         }
-
+        
         h2 {
             font-size: 2.25rem;
             font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 1.75rem;
+            margin-bottom: 1.5rem;
             position: relative;
-            display: inline-block;
         }
-
-        h2::after {
+        
+        h2:after {
             content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 50%;
+            display: block;
+            width: 80px;
             height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            background: var(--gradient-secondary);
+            margin-top: 0.5rem;
             border-radius: 3px;
         }
-
+        
         h3 {
-            font-size: 1.75rem;
+            font-size: 1.85rem;
+            font-weight: 700;
             margin-top: 2rem;
-            margin-bottom: 1.25rem;
-            color: var(--primary);
-            letter-spacing: -0.01em;
-        }
-
-        h4 {
-            font-size: 1.4rem;
-            margin-top: 1.75rem;
             margin-bottom: 1rem;
-            letter-spacing: -0.01em;
+        }
+        
+        h4 {
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
         }
 
+        h5 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
         p {
             margin-bottom: 1.25rem;
-            text-align: justify;
             font-size: 1.05rem;
         }
-
+        
         a {
-            color: var(--primary-light);
+            color: var(--color-secondary);
             text-decoration: none;
-            transition: var(--transition);
             font-weight: 500;
+            transition: var(--transition);
         }
-
+        
         a:hover {
-            color: var(--primary);
-            text-decoration: underline;
+            color: var(--color-primary);
         }
-
+        
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        strong {
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+        
         .container {
-            max-width: 1280px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
-            position: relative;
         }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--primary-light);
-            color: white;
-            padding: 0.85rem 1.75rem;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: var(--transition);
-            border: none;
-            font-weight: 600;
-            text-align: center;
-            letter-spacing: 0.01em;
-            box-shadow: var(--shadow);
-            gap: 0.5rem;
-        }
-
-        .btn:hover {
-            background-color: var(--primary);
-            text-decoration: none;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-secondary {
-            background-color: transparent;
-            border: 2px solid var(--primary-light);
-            color: var(--primary-light);
-        }
-
-        .btn-secondary:hover {
-            background-color: var(--primary-light);
-            color: white;
-        }
-
-        .btn-success { background-color: var(--success); }
-        .btn-warning { background-color: var(--warning); color: var(--dark); }
-        .btn-danger { background-color: var(--danger); }
-
-        /* Header */
+        
+        /* Header & Navigation */
         header {
-            background-color: var(--dark);
-            color: white;
-            padding: 1rem 0;
             position: fixed;
-            width: 100%;
             top: 0;
+            left: 0;
+            width: 100%;
             z-index: 1000;
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            background-color: rgba(15, 23, 42, 0.95);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, background-color 0.3s ease;
         }
-
+        
+        header.hidden {
+            transform: translateY(-100%);
+        }
+        
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 0;
+            height: 70px;
         }
-
+        
         .logo {
-            font-size: 1.5rem;
+            font-family: 'Playfair Display', serif;
             font-weight: 800;
-            letter-spacing: -0.03em;
-            background: linear-gradient(135deg, #93c5fd, #6366f1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 1.5rem;
+            color: white;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-
+        
+        .logo-gradient {
+            background: linear-gradient(to right, var(--color-secondary-light), var(--color-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
         .nav-links {
             display: flex;
-            list-style: none;
             gap: 2rem;
+            list-style: none;
         }
-
-        .nav-links li {
-            position: relative;
-        }
-
+        
         .nav-links a {
-            color: white;
+            color: rgba(255, 255, 255, 0.8);
             font-weight: 500;
-            font-size: 1rem;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+            padding: 0.5rem 0;
             position: relative;
-            padding-bottom: 0.25rem;
         }
-
+        
+        .nav-links a:hover {
+            color: white;
+            text-decoration: none;
+        }
+        
         .nav-links a::after {
-            content: '';
+            content: "";
             position: absolute;
             width: 0;
             height: 2px;
-            bottom: -4px;
+            bottom: 0;
             left: 0;
-            background-color: var(--accent);
+            background: var(--color-secondary);
             transition: width 0.3s ease;
         }
-
+        
         .nav-links a:hover::after {
             width: 100%;
         }
-
-        .nav-links a:hover {
-            text-decoration: none;
-        }
-
-        .mobile-menu {
+        
+        .mobile-menu-toggle {
             display: none;
-            cursor: pointer;
+            color: white;
             font-size: 1.5rem;
+            cursor: pointer;
         }
-
+        
+        .progress-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--gradient-secondary);
+            width: 0%;
+            transition: width 0.1s;
+        }
+        
         /* Hero Section */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-            color: white;
-            padding-top: 80px;
+            padding-top: 70px;
             position: relative;
             overflow: hidden;
+            background: var(--gradient-primary);
+            color: var(--color-text-inverse);
         }
-
-        .hero::before {
-            content: '';
+        
+        .hero-bg {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='rgba(255,255,255,0.1)' fill-rule='evenodd'/%3E%3C/svg%3E");
-            opacity: 0.7;
+            opacity: 0.1;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%23FFFFFF' stroke-width='1'%3E%3Cpath d='M769 229L1037 260.9M927 880L731 737 520 660 309 538 40 599 295 764 126.5 879.5 40 599-197 493 102 382-31 229 126.5 79.5-69-63'/%3E%3Cpath d='M-31 229L237 261 390 382 603 493 308.5 537.5 101.5 381.5M370 905L295 764'/%3E%3Cpath d='M520 660L578 842 731 737 840 599 603 493 520 660 295 764 309 538 390 382 539 269 769 229 577.5 41.5 370 105 295 -36 126.5 79.5 237 261 102 382 40 599 -69 737 127 880'/%3E%3Cpath d='M520-140L578.5 42.5 731-63M603 493L539 269 237 261 370 105M902 382L539 269M390 382L102 382'/%3E%3Cpath d='M-222 42L126.5 79.5 370 105 539 269 577.5 41.5 927 80 769 229 902 382 603 493 731 737M295-36L577.5 41.5M578 842L295 764M40-201L127 80M102 382L-261 269'/%3E%3C/g%3E%3Cg fill='%23FFFFFF'%3E%3Ccircle cx='769' cy='229' r='5'/%3E%3Ccircle cx='539' cy='269' r='5'/%3E%3Ccircle cx='603' cy='493' r='5'/%3E%3Ccircle cx='731' cy='737' r='5'/%3E%3Ccircle cx='520' cy='660' r='5'/%3E%3Ccircle cx='309' cy='538' r='5'/%3E%3Ccircle cx='295' cy='764' r='5'/%3E%3Ccircle cx='40' cy='599' r='5'/%3E%3Ccircle cx='102' cy='382' r='5'/%3E%3Ccircle cx='127' cy='80' r='5'/%3E%3Ccircle cx='370' cy='105' r='5'/%3E%3Ccircle cx='578' cy='42' r='5'/%3E%3Ccircle cx='237' cy='261' r='5'/%3E%3Ccircle cx='390' cy='382' r='5'/%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
         }
-
+        
         .hero-content {
-            max-width: 900px;
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
             margin: 0 auto;
             text-align: center;
-            padding: 3rem;
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-lg);
-            z-index: 10;
-            position: relative;
-            animation: fadeInUp 1s ease;
+            padding: 4rem 1rem;
         }
-
+        
+        .hero h1 {
+            color: white;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            line-height: 1.2;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            animation: fadeInUp 1s ease 0.4s both;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.6s both;
+            flex-wrap: wrap;
+        }
+        
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            line-height: 1.2;
-            position: relative;
-        }
-
-        .hero h1::after {
-            content: '';
-            position: absolute;
-            bottom: -0.75rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 2px;
-        }
-
-        .hero p {
-            font-size: 1.4rem;
-            margin-bottom: 2.5rem;
-            text-align: center;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            font-weight: 500;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
             justify-content: center;
-            margin-top: 2rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border: none;
+            outline: none;
         }
-
+        
+        .btn-primary {
+            background: var(--color-secondary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--color-accent);
+            color: white;
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            text-decoration: none;
+            transform: translateY(-2px);
+        }
+        
         /* Sections */
         section {
-            padding: 5rem 0;
+            padding: 6rem 0;
             position: relative;
             overflow: hidden;
         }
-
+        
+        section:nth-child(odd) {
+            background-color: var(--color-bg);
+        }
+        
         section:nth-child(even) {
             background-color: white;
         }
-
+        
         .section-header {
             text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
+            margin-bottom: 4rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
-
-        .section-header::after {
-            content: '';
-            position: absolute;
-            bottom: -1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 2px;
+        
+        .section-header h2 {
+            display: inline-block;
         }
-
+        
+        .section-header p {
+            font-size: 1.15rem;
+            color: var(--color-text-light);
+            margin-top: 1rem;
+        }
+        
         /* Cards */
         .cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 3rem;
+            margin-top: 2rem;
         }
-
+        
         .card {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            padding: 2rem;
-            transition: var(--transition);
-            border-top: 3px solid var(--accent);
-            position: relative;
+            background: var(--color-card);
+            border-radius: var(--radius-lg);
             overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            border-top: 4px solid var(--color-secondary);
         }
-
+        
         .card:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-lg);
         }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.03) 0%, rgba(30, 58, 138, 0.03) 100%);
-            z-index: 0;
+        
+        .card-body {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
-
-        .card > * {
-            position: relative;
-            z-index: 1;
-        }
-
-        .card h3, .card h4 {
-            margin-top: 0;
-            color: var(--primary);
-        }
-
+        
         .card-icon {
             font-size: 2.5rem;
-            color: var(--secondary);
-            margin-bottom: 1.5rem;
-            background: -webkit-linear-gradient(var(--secondary), var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--color-secondary);
+            margin-bottom: 1.25rem;
         }
-
+        
+        .card h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .card p {
+            margin-bottom: 1.5rem;
+            color: var(--color-text-light);
+            flex-grow: 1;
+        }
+        
+        .card-footer {
+            padding: 1rem 2rem;
+            border-top: 1px solid var(--color-bg-alt);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        /* Columns Layout */
+        .columns {
+            display: flex;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+        
+        .column {
+            flex: 1;
+        }
+        
         /* Tabs */
         .tabs {
             margin: 3rem 0;
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
+            background: white;
+            border-radius: var(--radius-lg);
             overflow: hidden;
+            box-shadow: var(--shadow);
         }
-
+        
         .tabs-header {
             display: flex;
-            background-color: #f8fafc;
-            position: relative;
             overflow-x: auto;
             scrollbar-width: none;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+            background: var(--color-bg);
+            border-bottom: 1px solid var(--color-border);
+            position: relative;
         }
         
         .tabs-header::-webkit-scrollbar {
             display: none;
         }
-
+        
         .tab-button {
-            padding: 1rem 1.5rem;
-            background-color: transparent;
+            padding: 1.25rem 1.5rem;
+            white-space: nowrap;
+            font-weight: 600;
+            color: var(--color-text-light);
+            background: transparent;
             border: none;
             cursor: pointer;
-            font-weight: 600;
-            font-size: 1rem;
-            color: var(--light-text);
             transition: var(--transition);
-            white-space: nowrap;
-            flex-shrink: 0;
             position: relative;
-            border-bottom: 3px solid transparent;
+            font-size: 0.95rem;
         }
-
+        
         .tab-button:hover {
-            color: var(--primary);
+            color: var(--color-primary);
         }
-
+        
         .tab-button.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-            background-color: white;
+            color: var(--color-secondary);
         }
-
+        
+        .tab-button.active::after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--color-secondary);
+        }
+        
         .tab-content {
             display: none;
             padding: 2rem;
-            background-color: white;
         }
-
+        
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.5s ease forwards;
+            animation: fadeIn 0.5s ease;
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            max-width: 800px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: var(--shadow-lg);
-            animation: modalZoomIn 0.3s ease;
-        }
-
-        @keyframes modalZoomIn {
             from {
-                transform: scale(0.95);
                 opacity: 0;
             }
             to {
-                transform: scale(1);
                 opacity: 1;
             }
         }
-
-        .close-modal {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--light-text);
-            transition: var(--transition);
-        }
-
-        .close-modal:hover {
-            color: var(--danger);
-        }
-
-        /* Timeline */
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 2rem auto;
-        }
-
-        .timeline::after {
-            content: '';
-            position: absolute;
-            width: 4px;
-            background-color: var(--accent);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -2px;
-        }
-
-        .timeline-item {
-            padding: 2rem 0;
-            position: relative;
-        }
-
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: white;
-            border: 4px solid var(--primary-light);
-            border-radius: 50%;
-            top: 2.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1;
-        }
-
-        .timeline-content {
-            position: relative;
-            width: 45%;
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-        }
-
-        .timeline-item:nth-child(odd) .timeline-content {
-            left: 0;
-        }
-
-        .timeline-item:nth-child(even) .timeline-content {
-            left: 55%;
-        }
-
-        /* Two columns */
-        .columns {
-            display: flex;
-            gap: 2.5rem;
-            margin: 2.5rem 0;
-            align-items: stretch;
-        }
-
-        .column {
-            flex: 1;
-            position: relative;
-        }
         
-        .column > *:first-child {
-            margin-top: 0;
-        }
-
         /* Tables */
         table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
             margin: 2rem 0;
-            border-radius: var(--border-radius);
             overflow: hidden;
+            border-radius: var(--radius);
             box-shadow: var(--shadow);
         }
-
-        th, td {
-            padding: 1rem 1.5rem;
-            text-align: left;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-        }
-
+        
         th {
-            background-color: var(--primary);
+            text-align: left;
+            padding: 1.25rem;
+            background: var(--color-primary);
             color: white;
             font-weight: 600;
-            text-transform: uppercase;
             font-size: 0.9rem;
             letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        
+        th:first-child {
+            border-top-left-radius: var(--radius);
+        }
+        
+        th:last-child {
+            border-top-right-radius: var(--radius);
+        }
+        
+        td {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--color-border);
+            transition: background 0.2s ease;
         }
         
         tr:last-child td {
             border-bottom: none;
         }
-
+        
+        tr:last-child td:first-child {
+            border-bottom-left-radius: var(--radius);
+        }
+        
+        tr:last-child td:last-child {
+            border-bottom-right-radius: var(--radius);
+        }
+        
         tr:nth-child(even) {
-            background-color: #f8fafc;
+            background: var(--color-bg);
         }
         
-        tr {
-            transition: background-color 0.3s ease;
+        tr:hover td {
+            background: rgba(14, 165, 233, 0.05);
         }
         
-        tr:hover {
-            background-color: rgba(147, 197, 253, 0.1);
-        }
-
-        /* Quotes */
-        blockquote {
-            font-style: italic;
-            border-left: 4px solid var(--accent);
-            padding: 1.5rem;
-            padding-left: 2rem;
-            margin: 2rem 0;
-            background-color: rgba(147, 197, 253, 0.1);
-            border-radius: 0 var(--border-radius) var(--border-radius) 0;
-            position: relative;
-        }
-        
-        blockquote::before {
-            content: '"';
-            position: absolute;
-            top: -0.5rem;
-            left: 0.75rem;
-            font-size: 4rem;
-            color: var(--accent);
-            opacity: 0.3;
-            font-family: Georgia, serif;
-            line-height: 1;
-        }
-        
-        blockquote cite {
-            display: block;
-            margin-top: 1rem;
-            font-weight: 600;
-            font-style: normal;
-            color: var(--primary);
-            font-size: 0.9rem;
-        }
-
         /* Flowchart */
         .flowchart {
-            margin: 2rem 0;
-            text-align: center;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
+            gap: 1rem;
+            margin: 3rem 0;
         }
-
+        
         .flowchart-item {
-            display: inline-block;
-            background-color: white;
-            border: 2px solid var(--primary-light);
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            margin: 0.5rem;
+            background: white;
+            border-radius: var(--radius);
+            padding: 1.25rem;
             min-width: 200px;
+            text-align: center;
             box-shadow: var(--shadow);
+            border: 1px solid var(--color-border);
+            font-weight: 500;
             transition: var(--transition);
         }
-
+        
         .flowchart-item:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.02);
             box-shadow: var(--shadow-lg);
-            border-color: var(--primary);
+            border-color: var(--color-secondary-light);
         }
-
+        
         .flowchart-arrow {
-            display: inline-block;
+            color: var(--color-secondary);
             font-size: 1.5rem;
-            color: var(--primary-light);
-            margin: 0 0.5rem;
+            display: flex;
+            align-items: center;
         }
-
-        /* Vote Simulation */
-        .vote-simulation {
-            background-color: white;
-            border-radius: var(--border-radius);
-            padding: 2.5rem;
-            margin: 3rem 0;
+        
+        /* Blockquotes */
+        blockquote {
+            margin: 2.5rem 0;
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            background: var(--color-bg);
+            border-left: 4px solid var(--color-secondary);
             box-shadow: var(--shadow);
-        }
-
-        .proposal {
-            background-color: #f8fafc;
-            padding: 1.5rem 2rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 2rem;
-            border-left: 4px solid var(--primary);
-            box-shadow: var(--shadow-sm);
             position: relative;
         }
         
-        .proposal h5 {
-            margin-top: 0;
-            color: var(--primary);
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-        }
-        
-        .proposal p {
-            margin-bottom: 0;
-        }
-        
-        .proposal::before {
-            content: 'PROPOSAL';
+        blockquote::before {
+            content: """;
+            font-family: Georgia, serif;
+            font-size: 5rem;
             position: absolute;
-            top: 0.75rem;
-            right: 1rem;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--primary);
-            opacity: 0.5;
-            letter-spacing: 0.1em;
+            left: 0.5rem;
+            top: -1rem;
+            color: var(--color-secondary-light);
+            opacity: 0.3;
         }
-
+        
+        blockquote p {
+            margin-bottom: 0.5rem;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+        
+        blockquote cite {
+            display: block;
+            font-weight: 600;
+            margin-top: 1rem;
+            font-style: normal;
+            color: var(--color-primary);
+        }
+        
+        /* Voting Simulation */
+        .vote-simulation {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin: 3rem 0;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .proposal {
+            background: var(--color-bg);
+            padding: 1.5rem 2rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--color-primary);
+        }
+        
         .vote-buttons {
             display: flex;
             gap: 1rem;
             margin: 1.5rem 0;
         }
-
-        .vote-result {
-            margin-top: 2rem;
-            display: none;
-            background-color: #f8fafc;
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            animation: fadeIn 0.5s ease forwards;
-            box-shadow: var(--shadow-sm);
+        
+        .btn-success {
+            background: var(--color-success);
+            color: white;
         }
-
+        
+        .btn-success:hover {
+            background: #0ca678;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .btn-danger {
+            background: var(--color-danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #dc2626;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .vote-result {
+            display: none;
+            margin-top: 2rem;
+            background: var(--color-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            animation: fadeIn 0.5s;
+        }
+        
         .vote-bar {
             height: 36px;
-            background-color: rgba(0,0,0,0.05);
-            border-radius: var(--border-radius);
+            background: rgba(0,0,0,0.05);
+            border-radius: var(--radius);
             overflow: hidden;
             margin: 1rem 0;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
-
+        
         .vote-progress {
             height: 100%;
-            background: linear-gradient(90deg, var(--primary-light), var(--primary));
+            background: linear-gradient(90deg, var(--color-secondary), var(--color-accent));
             width: 0%;
             transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
         
-        .vote-progress::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: 100%;
-            width: 10px;
-            background-color: rgba(255,255,255,0.3);
-            transform: skewX(-20deg);
-        }
-        
-        #vote-analysis-1, #vote-analysis-2, #vote-analysis-3 {
-            background-color: white;
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            border-left: 3px solid var(--primary-light);
-            font-style: italic;
-            margin-top: 1rem;
-        }
-
         /* Constitution Simulator */
         .constitution-simulator {
-            background-color: white;
-            border-radius: var(--border-radius);
+            background: white;
+            border-radius: var(--radius-lg);
             padding: 2.5rem;
             margin: 3rem 0;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-lg);
             position: relative;
             overflow: hidden;
         }
         
-        .constitution-simulator::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 30%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(30, 58, 138, 0.03) 0%, rgba(59, 130, 246, 0.05) 100%);
-            clip-path: polygon(100% 0, 0 0, 100% 100%);
-            z-index: 0;
-        }
-
         .editor {
-            border: 1px solid rgba(0,0,0,0.1);
-            border-radius: var(--border-radius);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
             padding: 1.5rem;
-            min-height: 220px;
+            min-height: 200px;
             margin: 1.5rem 0;
-            background-color: #f8fafc;
+            background: var(--color-bg);
             font-family: 'Courier New', monospace;
             line-height: 1.5;
-            font-size: 0.95rem;
-            color: var(--text);
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
+            font-size: 0.95rem;
+            color: var(--color-text);
             position: relative;
         }
         
         .editor:focus {
             outline: none;
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+            border-color: var(--color-secondary);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
         }
         
-        .constitution-simulator h3 {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-        
-        .constitution-simulator h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 80%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--secondary), transparent);
-        }
-
         /* Case Study Box */
         .case-study {
-            background-color: #f8fafc;
-            border-left: 5px solid var(--primary-light);
+            background: white;
+            border-radius: var(--radius-lg);
             padding: 2.5rem;
             margin: 3rem 0;
-            border-radius: 0 var(--border-radius) var(--border-radius) 0;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-lg);
+            border-left: 5px solid var(--color-secondary);
             position: relative;
             overflow: hidden;
         }
@@ -881,65 +790,18 @@
             right: 1rem;
             font-size: 0.75rem;
             font-weight: 700;
-            color: var(--primary-light);
+            color: var(--color-text-light);
             opacity: 0.5;
             letter-spacing: 0.1em;
         }
-
+        
         .case-study h3 {
             margin-top: 0;
-            color: var(--primary);
-            font-size: 1.6rem;
-            border-bottom: 2px solid rgba(59, 130, 246, 0.2);
+            border-bottom: 2px solid var(--color-bg);
             padding-bottom: 0.75rem;
             margin-bottom: 1.5rem;
         }
-
-        /* Progress bar */
-        .progress-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: transparent;
-            z-index: 1001;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--primary-light));
-            width: 0%;
-            transition: width 0.1s ease;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            margin: 1rem 0;
-            gap: 2rem;
-        }
-
-        .footer-links a {
-            color: white;
-            opacity: 0.8;
-            transition: var(--transition);
-        }
-
-        .footer-links a:hover {
-            opacity: 1;
-            text-decoration: none;
-        }
-
+        
         /* Scroll to top */
         .scroll-top {
             position: fixed;
@@ -947,110 +809,352 @@
             right: 2rem;
             width: 50px;
             height: 50px;
-            background-color: var(--primary-light);
+            background: var(--color-secondary);
             color: white;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.2rem;
             cursor: pointer;
             opacity: 0;
             transition: var(--transition);
-            z-index: 1000;
-            box-shadow: var(--shadow);
-        }
-
-        .scroll-top:hover {
-            background-color: var(--primary);
-            transform: translateY(-3px);
+            z-index: 100;
             box-shadow: var(--shadow-lg);
         }
-
+        
+        .scroll-top:hover {
+            background: var(--color-accent);
+            transform: translateY(-3px);
+        }
+        
         .scroll-top.visible {
             opacity: 1;
         }
-
-        /* Animations */
+        
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: var(--radius-lg);
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            animation: modalZoomIn 0.3s var(--ease-out-expo);
+        }
+        
+        .modal-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-body {
+            padding: 2rem;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--color-text-light);
+            transition: var(--transition);
+        }
+        
+        .close-modal:hover {
+            color: var(--color-danger);
+        }
+        
+        @keyframes modalZoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 950px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: var(--color-secondary-light);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            padding: 1.5rem 0;
+            position: relative;
+            width: 100%;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 4px solid var(--color-secondary);
+            border-radius: 50%;
+            top: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            transition: var(--transition);
+        }
+        
+        .timeline-item:hover::after {
+            background: var(--color-secondary);
+        }
+        
+        .timeline-content {
+            position: relative;
+            width: 45%;
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            left: 55%;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--color-bg-dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-column h4 {
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .footer-column h4::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background: var(--color-secondary);
+            margin-top: 0.75rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--color-secondary);
+            text-decoration: none;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Animation on scroll */
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.8s ease, transform 0.8s ease;
         }
-
+        
         .fade-in.active {
             opacity: 1;
             transform: translateY(0);
         }
-
+        
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             h1 {
+                font-size: 3rem;
+            }
+            
+            h2 {
                 font-size: 2rem;
             }
-
+            
+            .column img {
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
             h2 {
-                font-size: 1.5rem;
+                font-size: 1.75rem;
             }
-
+            
             .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
+                position: fixed;
+                top: 70px;
                 left: 0;
-                width: 100%;
-                background-color: var(--dark);
+                right: 0;
+                background: var(--color-bg-dark);
                 flex-direction: column;
-                padding: 1rem 0;
-                box-shadow: var(--shadow);
+                padding: 1.5rem;
+                gap: 1rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.3s ease;
+                box-shadow: var(--shadow-lg);
+                z-index: 999;
             }
-
-            .nav-links.show {
-                display: flex;
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
             }
-
-            .nav-links li {
-                margin: 0.5rem 0;
-                text-align: center;
-            }
-
-            .mobile-menu {
+            
+            .mobile-menu-toggle {
                 display: block;
             }
-
+            
             .columns {
                 flex-direction: column;
+                gap: 2rem;
             }
-
+            
+            .section-header {
+                margin-bottom: 3rem;
+            }
+            
             .timeline::after {
                 left: 31px;
             }
-
+            
+            .timeline-item::after {
+                left: 31px;
+            }
+            
             .timeline-content {
                 width: calc(100% - 80px);
+                max-width: 100%;
             }
-
+            
             .timeline-item:nth-child(odd) .timeline-content,
             .timeline-item:nth-child(even) .timeline-content {
                 left: 80px;
             }
-
-            .timeline-item::after {
-                left: 31px;
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+            }
+            
+            section {
+                padding: 4rem 0;
+            }
+            
+            .cards {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Progress Bar -->
     <div class="progress-container">
         <div class="progress-bar" id="progress-bar"></div>
     </div>
 
-    <header>
+    <!-- Header -->
+    <header id="header">
         <div class="container">
             <nav>
-                <div class="logo">DigitalConsti</div>
-                <ul class="nav-links">
+                <div class="logo">
+                    <span class="logo-gradient">Digital</span>Constitutionalism
+                </div>
+                <ul class="nav-links" id="nav-links">
                     <li><a href="#intro">Introduction</a></li>
                     <li><a href="#daos">DAOs</a></li>
                     <li><a href="#network-states">Network States</a></li>
@@ -1059,32 +1163,505 @@
                     <li><a href="#case-studies">Case Studies</a></li>
                     <li><a href="#conclusion">Conclusion</a></li>
                 </ul>
-                <div class="mobile-menu" id="mobile-menu">
+                <div class="mobile-menu-toggle" id="mobile-menu-toggle">
                     <i class="fas fa-bars"></i>
                 </div>
             </nav>
         </div>
     </header>
 
+    <!-- Hero Section -->
     <section class="hero">
+        <div class="hero-bg"></div>
         <div class="container">
             <div class="hero-content">
                 <h1>Reconceptualizing Constitutionalism for the Digital Era</h1>
                 <p>An Exploratory Study of Governance Architectures for Decentralized Autonomous Organizations (DAOs) and Subsequent Network States</p>
                 <div class="hero-buttons">
-                    <a href="#intro" class="btn"><i class="fas fa-arrow-down"></i> Begin Exploration</a>
-                    <button class="btn btn-secondary" id="open-abstract"><i class="fas fa-file-alt"></i> Read Abstract</button>
+                    <a href="#intro" class="btn btn-primary">
+                        <i class="fas fa-arrow-down"></i> Begin Exploration
+                    </a>
+                    <button class="btn btn-outline" id="open-abstract">
+                        <i class="fas fa-file-alt"></i> Read Abstract
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Conclusion Section -->
+    <section id="conclusion" class="fade-in">
+        <div class="container">
+            <div class="section-header">
+                <h2>Conclusion</h2>
+                <p>Synthesizing our exploration of digital constitutionalism and charting future directions for governance in the digital age.</p>
+            </div>
+            
+            <div class="columns">
+                <div class="column">
+                    <h3>Synthesis of Research Insights</h3>
+                    <p>Our exploration of DAOs and network states through the lens of constitutional law reveals several key insights:</p>
+                    <ol>
+                        <li><strong>Hybrid Constitutionalism:</strong> The most effective DAO governance structures blend code-based enforcement with human interpretation through textual constitutions, creating a new form of constitutional practice that leverages both technical precision and social consensus.</li>
+                        <li><strong>Sovereignty Reimagined:</strong> Network states challenge traditional notions of sovereignty based on territorial control, suggesting a future where sovereign entities might be defined by shared purpose and values rather than geography.</li>
+                        <li><strong>Constitutional Design Innovation:</strong> DAOs are pioneering new approaches to constitutional design that leverage mechanism design, token engineering, and cryptographic guarantees to create governance systems with novel properties.</li>
+                        <li><strong>Legal Adaptation Challenges:</strong> Traditional legal systems face significant challenges in accommodating borderless, code-based entities, though experiments like the Wyoming DAO law show potential pathways for integration.</li>
+                        <li><strong>Substantive Constitutional Values:</strong> Despite their technical novelty, DAOs and network states grapple with the same fundamental constitutional questions that have defined governance for centuries: balancing rights, distributing power, ensuring representation, and maintaining legitimacy.</li>
+                    </ol>
+                </div>
+                <div class="column">
+                    <h3>Future Directions for Digital Constitutionalism</h3>
+                    <p>As DAOs and network states continue to evolve, several promising directions for future research and development emerge:</p>
+                    <ul>
+                        <li><strong>Interoperability Frameworks:</strong> Developing constitutional principles for collaboration between DAOs, network states, and traditional legal systems</li>
+                        <li><strong>Judicial Functions:</strong> Creating more sophisticated dispute resolution systems that can interpret constitutional principles across code and social contexts</li>
+                        <li><strong>Digital Rights Expansion:</strong> Articulating and protecting a broader set of rights specific to digital governance contexts</li>
+                        <li><strong>Legitimacy Mechanisms:</strong> Exploring how digital governance systems can establish and maintain legitimacy without traditional sources of authority</li>
+                        <li><strong>Adaptive Governance:</strong> Designing constitutional systems that can evolve responsively while maintaining core principles</li>
+                    </ul>
+                    <p>These directions suggest that digital constitutionalism is not merely adapting traditional principles to new technologies, but potentially developing entirely new approaches to governance that could ultimately influence how we understand constitutional law in all contexts.</p>
+                </div>
+            </div>
+            
+            <h3>Broader Implications for Constitutional Theory</h3>
+            
+            <p>The emergence of DAOs and network states has profound implications for constitutional theory that extend beyond the digital realm:</p>
+            
+            <div class="cards">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Voluntary Association</h4>
+                        <p>DAOs demonstrate that effective governance can be built on voluntary association rather than territorial birth, challenging assumptions about the necessary foundations of constitutional legitimacy. This may influence how we understand consent and legitimacy in all governance contexts.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Constitutional Experimentation</h4>
+                        <p>The rapid iteration and experimentation possible in DAO governance enables testing constitutional designs at unprecedented speed, potentially accelerating our understanding of effective governance mechanisms and creating knowledge that can benefit traditional constitutional systems.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Pluralistic Sovereignty</h4>
+                        <p>Network states suggest a future where multiple forms of sovereignty might coexist, with individuals holding various forms of "citizenship" simultaneously. This could revitalize federalist and cosmopolitan theories that have struggled with territorial limitations.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Technologically-Enforced Rights</h4>
+                        <p>Smart contracts offer the possibility of rights that are cryptographically guaranteed rather than merely legally protected, potentially changing how we think about the relationship between constitutional rights and their enforcement mechanisms.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="case-study">
+                <h3>Final Thoughts</h3>
+                <p>The reconceptualization of constitutionalism for the digital era represents not just an adaptation of existing principles to new technologies, but a fundamental rethinking of how governance operates in a world where code, community, and conviction can create new forms of political organization.</p>
+                <p>As Tarunabh Khaitan and others argue in "Constitutional Resilience in South Asia" (2023), constitutional systems derive their strength not just from formal structures but from their ability to adapt while maintaining core principles. DAOs and network states are testing the boundaries of this adaptability, potentially revealing new pathways for constitutional development across all contexts.</p>
+                <p>By continuing to explore these emerging governance forms through the lens of comparative constitutional law, we can gain valuable insights not just into the future of digital governance, but into the fundamental nature of constitutionalism itself.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>About This Research</h4>
+                    <p>An exploratory study of governance architectures for Decentralized Autonomous Organizations (DAOs) and Network States as part of Comparative Public Law coursework.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="#intro">Introduction</a></li>
+                        <li><a href="#daos">DAOs</a></li>
+                        <li><a href="#network-states">Network States</a></li>
+                        <li><a href="#constitutional-design">Constitutional Design</a></li>
+                        <li><a href="#legal-challenges">Legal Challenges</a></li>
+                        <li><a href="#case-studies">Case Studies</a></li>
+                        <li><a href="#conclusion">Conclusion</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" id="open-abstract-footer">Abstract</a></li>
+                        <li><a href="#">Bibliography</a></li>
+                        <li><a href="#">Related Research</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Digital Constitutionalism Research Project | Presented by: Akshat, Alok and Amol</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to top button -->
+    <div class="scroll-top" id="scroll-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <!-- Abstract Modal -->
+    <div class="modal" id="abstract-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Abstract</h3>
+                <button class="close-modal" id="close-abstract">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>This research undertakes a rigorous and comprehensive exploratory study into the nascent governance architectures of Decentralized Autonomous Organizations (DAOs) and the conceptual emergence of network states within the contemporary digital era. It probes the recontextualization of constitutionalism in the rapidly evolving landscape of digital governance and autonomous collectives, positing that the advent of DAOs necessitates a fundamental reevaluation of traditional governance principles to suit the decentralized and often borderless nature of online communities.</p>
+                
+                <p>Employing a robust mixed-methods approach that encompasses a meticulous historical review, in-depth textual analysis, and incisive case studies, this study dissects the unique characteristics of digital constitutions, smart contracts, and the systemic governance frameworks that underpin DAOs. It reflects on the roots of constitutionalism in online spaces, tracing its trajectory from the early USENET groups to the sophisticated entities within the burgeoning Web3 ecosystem. The investigation delves into the multifaceted legal and procedural challenges these organizations face, such as personal jurisdiction issues and the adaptation of seminal principles from significant constitutional thinkers, including Kurt Gödel's seminal remarks on procedural perversity and Antonin Scalia's influential textualist approach.</p>
+                
+                <p>The research provides a critical examination of the Wyoming DAO experiment as a microcosm for understanding the complex interaction between DAOs and nation-states. Furthermore, it ventures into the realm of cybernetic and constitutional theories to propose innovative models of governance that can foster the decentralization of power, culminating in the groundbreaking concept of network states.</p>
+                
+                <p>Strategic recommendations for the development of future DAO constitutions are presented, supported by principles gleaned from an exhaustive analysis of existing governance documents and technical publication standards. The study underscores the paramount importance of establishing robust constitutional frameworks to maintain the integrity and functionality of DAOs as they continue to amass substantial resources and wield increasing influence within the digital realm.</p>
+                
+                <p>Keywords: Decentralized Autonomous Organizations, Network States, Digital Constitutionalism, Smart Contracts, Cybernetic Governance.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+        
+        mobileMenuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuToggle.innerHTML = navLinks.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Progress bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+            
+            // Show/hide scroll to top button
+            const scrollTop = document.getElementById('scroll-top');
+            if (winScroll > 500) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+            
+            // Header hide/show on scroll
+            const header = document.getElementById('header');
+            if (winScroll > lastScrollTop && winScroll > 200) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
+            lastScrollTop = winScroll <= 0 ? 0 : winScroll;
+        });
+        
+        let lastScrollTop = 0;
+        
+        // Scroll to top
+        document.getElementById('scroll-top').addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Tabs
+        const tabButtons = document.querySelectorAll('.tab-button');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                const tabsContainer = button.closest('.tabs');
+                
+                // Remove active class from all buttons in this container
+                tabsContainer.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Remove active class from all contents in this container
+                tabsContainer.parentElement.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Add active class to current button and content
+                button.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Modal controls
+        const openAbstractBtn = document.getElementById('open-abstract');
+        const openAbstractFooterBtn = document.getElementById('open-abstract-footer');
+        const closeAbstractBtn = document.getElementById('close-abstract');
+        const abstractModal = document.getElementById('abstract-modal');
+        
+        openAbstractBtn.addEventListener('click', () => {
+            abstractModal.style.display = 'flex';
+        });
+        
+        openAbstractFooterBtn.addEventListener('click', () => {
+            abstractModal.style.display = 'flex';
+        });
+        
+        closeAbstractBtn.addEventListener('click', () => {
+            abstractModal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', (event) => {
+            if (event.target === abstractModal) {
+                abstractModal.style.display = 'none';
+            }
+        });
+        
+        // Constitution analyzer
+        const analyzeConstitutionBtn = document.getElementById('analyze-constitution');
+        const constitutionAnalysis = document.getElementById('constitution-analysis');
+        
+        analyzeConstitutionBtn.addEventListener('click', () => {
+            if (constitutionAnalysis.style.display === 'none') {
+                constitutionAnalysis.style.display = 'block';
+                analyzeConstitutionBtn.textContent = 'Hide Analysis';
+            } else {
+                constitutionAnalysis.style.display = 'none';
+                analyzeConstitutionBtn.textContent = 'Comprehensive Constitutional Analysis';
+            }
+        });
+        
+        // Voting simulation
+        function setupVoting(yesButtonId, noButtonId, resultId, resultTextId, yesPercentId, noPercentId, progressId, analysisId, simulationType) {
+            const yesButton = document.getElementById(yesButtonId);
+            const noButton = document.getElementById(noButtonId);
+            const result = document.getElementById(resultId);
+            const resultText = document.getElementById(resultTextId);
+            const yesPercent = document.getElementById(yesPercentId);
+            const noPercent = document.getElementById(noPercentId);
+            const progress = document.getElementById(progressId);
+            const analysis = document.getElementById(analysisId);
+            
+            let votes = { yes: 0, no: 0 };
+            
+            function updateResult() {
+                const total = votes.yes + votes.no;
+                if (total === 0) return;
+                
+                const yesPercentValue = Math.round((votes.yes / total) * 100);
+                const noPercentValue = Math.round((votes.no / total) * 100);
+                
+                yesPercent.textContent = yesPercentValue;
+                noPercent.textContent = noPercentValue;
+                progress.style.width = yesPercentValue + '%';
+                
+                if (yesPercentValue > noPercentValue) {
+                    resultText.textContent = 'Proposal Passed';
+                    resultText.style.color = 'var(--color-success)';
+                } else {
+                    resultText.textContent = 'Proposal Rejected';
+                    resultText.style.color = 'var(--color-danger)';
+                }
+                
+                // Different analysis based on voting type
+                if (simulationType === 'token') {
+                    if (yesPercentValue > noPercentValue) {
+                        analysis.textContent = 'In this token-based voting model, large token holders had significant influence. The proposal passed largely due to support from a few major stakeholders, demonstrating the plutocratic tendencies of simple token-based voting.';
+                    } else {
+                        analysis.textContent = 'In this token-based voting model, despite support from some large token holders, broader community opposition defeated the proposal, showing the importance of widespread consensus even in plutocratic systems.';
+                    }
+                } else if (simulationType === 'quadratic') {
+                    if (yesPercentValue > noPercentValue) {
+                        analysis.textContent = 'Using quadratic voting, the proposal passed with broader community support. The quadratic cost structure reduced the influence of large token holders, allowing for more democratic outcomes that better reflect the true preferences of the community.';
+                    } else {
+                        analysis.textContent = 'Using quadratic voting, the proposal was rejected despite support from some large stakeholders. This demonstrates how quadratic voting can protect against plutocratic capture by requiring much greater investment from large holders to dominate voting outcomes.';
+                    }
+                } else if (simulationType === 'conviction') {
+                    if (yesPercentValue > noPercentValue) {
+                        analysis.textContent = 'Under conviction voting, the proposal passed due to strong support from committed long-term stakeholders. This voting model prioritizes dedication to the project over mere token holdings, preventing short-term speculators from dictating governance.';
+                    } else {
+                        analysis.textContent = 'Under conviction voting, the proposal was rejected because long-term community members opposed it. This demonstrates how conviction voting can protect DAOs against governance attacks and ensure decisions align with long-term stakeholder interests.';
+                    }
+                }
+            }
+            
+            yesButton.addEventListener('click', function() {
+                votes.yes += (simulationType === 'token') ? 20 : (simulationType === 'quadratic') ? 10 : 15;
+                updateResult();
+                result.style.display = 'block';
+            });
+            
+            noButton.addEventListener('click', function() {
+                votes.no += (simulationType === 'token') ? 10 : (simulationType === 'quadratic') ? 15 : 10;
+                updateResult();
+                result.style.display = 'block';
+            });
+        }
+        
+        // Set up each voting simulation
+        setupVoting('yes-vote-1', 'no-vote-1', 'vote-result-1', 'result-text-1', 'yes-percent-1', 'no-percent-1', 'vote-progress-1', 'vote-analysis-1', 'token');
+        setupVoting('yes-vote-2', 'no-vote-2', 'vote-result-2', 'result-text-2', 'yes-percent-2', 'no-percent-2', 'vote-progress-2', 'vote-analysis-2', 'quadratic');
+        setupVoting('yes-vote-3', 'no-vote-3', 'vote-result-3', 'result-text-3', 'yes-percent-3', 'no-percent-3', 'vote-progress-3', 'vote-analysis-3', 'conviction');
+        
+        // Scroll animations
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    fadeObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -100px 0px'
+        });
+        
+        fadeElements.forEach(element => {
+            fadeObserver.observe(element);
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // Close mobile menu if open
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- Case Studies Section -->
+    <section id="case-studies" class="fade-in">
+        <div class="container">
+            <div class="section-header">
+                <h2>Case Studies in Digital Constitutionalism</h2>
+                <p>Examining real-world examples of constitutional innovation in the digital governance space.</p>
+            </div>
+            
+            <h3>The Wyoming DAO Experiment</h3>
+            
+            <div class="columns">
+                <div class="column">
+                    <p>Wyoming's pioneering legislation recognizing DAOs as legal entities provides a critical case study in how traditional legal systems can accommodate novel digital governance structures. In 2021, Wyoming enacted a law that recognized DAOs as a type of Limited Liability Company (LLC), creating the first comprehensive legal framework for DAOs in the United States.</p>
+                    
+                    <p>Key provisions of the Wyoming DAO LLC law include:</p>
+                    <ul>
+                        <li>Recognition of smart contracts as a means of governance</li>
+                        <li>Limited liability protection for DAO members</li>
+                        <li>Requirements for articles of organization</li>
+                        <li>Default rules that apply if smart contracts are silent</li>
+                        <li>Provisions for dispute resolution</li>
+                    </ul>
+                    
+                    <p>This legislation represents a significant step toward integrating DAOs into the existing legal framework, bridging the gap between code-based governance and traditional legal structures.</p>
+                </div>
+                <div class="column">
+                    <div class="case-study">
+                        <h3>Constitutional Implications</h3>
+                        <p>From a constitutional perspective, the Wyoming DAO law exemplifies principles of federalism and state autonomy. The U.S. Constitution's Tenth Amendment reserves powers not delegated to the federal government to the states, allowing Wyoming to exercise its state power to create innovative legal frameworks.</p>
+                        
+                        <p>However, this arrangement also creates potential tensions:</p>
+                        <ul>
+                            <li><strong>Federal Preemption:</strong> Federal securities laws may still apply to DAO tokens</li>
+                            <li><strong>Interstate Commerce:</strong> DAOs operating across state lines face complex jurisdictional questions</li>
+                            <li><strong>International Law:</strong> DAOs with global membership may be subject to conflicting legal regimes</li>
+                        </ul>
+                        
+                        <p>The Wyoming experiment illustrates both the adaptability of the American federal system and the challenges of accommodating truly borderless entities within a system designed for territorial jurisdiction.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Token Engineering and Constitutional Design</h3>
+            
+            <p>Token engineering represents a novel approach to constitutional design that seeks to align incentives through cryptoeconomic mechanisms. This discipline applies principles from mechanism design, game theory, and behavioral economics to create governance systems that encourage desired behaviors through carefully crafted incentive structures.</p>
+            
+            <div class="case-study">
+                <h3>Case Study: Maker DAO Governance</h3>
+                <p>MakerDAO provides a sophisticated example of token engineering as constitutional design:</p>
+                <ul>
+                    <li>Uses a dual-token system (MKR governance tokens and DAI stablecoins)</li>
+                    <li>MKR holders vote on risk parameters and system upgrades</li>
+                    <li>Token value is directly tied to system performance, creating aligned incentives</li>
+                    <li>Implemented a gradual transition from Foundation control to decentralized governance</li>
+                    <li>Established specialized domain teams with delegated authority</li>
+                </ul>
+                <p>MakerDAO's governance exemplifies how token engineering can create constitutional systems with sophisticated checks and balances while maintaining decentralization. The system's resilience during the 2020 crypto market crash demonstrated the effectiveness of this approach under stress.</p>
+            </div>
+            
+            <h3>Emerging Network State Experiments</h3>
+            
+            <p>While fully realized network states do not yet exist, several projects are experimenting with elements of the network state concept, providing valuable insights into the constitutional challenges and opportunities they present.</p>
+            
+            <div class="cards">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Praxis</h4>
+                        <p>Praxis is developing a network state focused on building a new city founded on shared values and governance innovations:</p>
+                        <ul>
+                            <li>Blending digital citizenship with physical community building</li>
+                            <li>Creating governance tools for community decision-making</li>
+                            <li>Developing land acquisition strategies for territorial presence</li>
+                            <li>Building digital identity and reputation systems</li>
+                        </ul>
+                        <p>Praxis illustrates the challenge of translating digital governance concepts into physical reality while maintaining coherent constitutional principles across domains.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h4>CityDAO</h4>
+                        <p>CityDAO purchased land in Wyoming to experiment with blockchain-based governance of physical property:</p>
+                        <ul>
+                            <li>Using NFTs to represent land ownership rights</li>
+                            <li>Creating governance processes for land use decisions</li>
+                            <li>Establishing membership tiers with different rights</li>
+                            <li>Working within existing legal frameworks while innovating</li>
+                        </ul>
+                        <p>CityDAO demonstrates how digital constitutional principles can be applied to governance of physical assets, highlighting both possibilities and limitations in the current legal environment.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Nation3</h4>
+                        <p>Nation3 aims to build a cloud nation with its own jurisdiction for the internet economy:</p>
+                        <ul>
+                            <li>Creating a digital jurisdiction for contracts and dispute resolution</li>
+                            <li>Developing passport NFTs for citizenship</li>
+                            <li>Building a treasury for public goods funding</li>
+                            <li>Establishing governance mechanisms for policy decisions</li>
+                        </ul>
+                        <p>Nation3 focuses on creating legal infrastructure for digital activity, highlighting how network states might develop specialized governance services that complement rather than replace traditional state functions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
     <section id="intro" class="fade-in">
         <div class="container">
             <div class="section-header">
                 <h2>Introduction</h2>
+                <p>Exploring the intersection of constitutional law principles and emerging digital governance structures in the context of decentralized autonomous organizations and network states.</p>
             </div>
-            <p>This research explores the intersection of constitutional law principles and emerging digital governance structures, specifically Decentralized Autonomous Organizations (DAOs) and network states. As our course on Comparative Public Law examines the evolution of constitutionalism across different legal cultures, this study extends that analysis into the rapidly developing realm of blockchain-based governance.</p>
             
             <div class="columns">
                 <div class="column">
@@ -1105,57 +1682,191 @@
             </div>
             
             <h3>Research Questions</h3>
+            
             <div class="cards">
                 <div class="card">
-                    <div class="card-icon">
-                        <i class="fas fa-balance-scale"></i>
+                    <div class="card-body">
+                        <div class="card-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <h3>Constitutional Adaptation</h3>
+                        <p>How can traditional principles of constitutionalism be adapted and applied to DAOs, considering their decentralized nature and code-based governance?</p>
                     </div>
-                    <h3>Constitutional Adaptation</h3>
-                    <p>How can traditional principles of constitutionalism be adapted and applied to DAOs, considering their decentralized nature and code-based governance?</p>
                 </div>
+                
                 <div class="card">
-                    <div class="card-icon">
-                        <i class="fas fa-gavel"></i>
+                    <div class="card-body">
+                        <div class="card-icon">
+                            <i class="fas fa-gavel"></i>
+                        </div>
+                        <h3>Legal Challenges</h3>
+                        <p>What procedural and substantive legal challenges do DAOs face in the digital space, and how might insights from constitutional thinkers address them?</p>
                     </div>
-                    <h3>Legal Challenges</h3>
-                    <p>What procedural and substantive legal challenges do DAOs face in the digital space, and how might insights from constitutional thinkers address them?</p>
                 </div>
+                
                 <div class="card">
-                    <div class="card-icon">
-                        <i class="fas fa-globe"></i>
+                    <div class="card-body">
+                        <div class="card-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3>Future Directions</h3>
+                        <p>What are the future directions for digital constitutionalism, specifically regarding the balance between technological innovation and legal order?</p>
                     </div>
-                    <h3>Future Directions</h3>
-                    <p>What are the future directions for digital constitutionalism, specifically regarding the balance between technological innovation and legal order?</p>
+                </div>
+            </div>
+            
+            <h3>Applying Lessons from Kurt Gödel to DAO Governance</h3>
+            
+            <div class="columns">
+                <div class="column">
+                    <p>Kurt Gödel's critique of the U.S. Constitution and his concept of "procedural perversity" offer valuable insights into the challenges of designing robust governance systems for DAOs and network states.</p>
+                    
+                    <p>In preparation for his U.S. citizenship exam in 1947, Gödel identified a potential "loophole" in Article V of the U.S. Constitution, which outlines the process for amending the Constitution. As Gödel observed, since Article V does not explicitly prohibit amendments to the amendment process itself, it could theoretically be used to eliminate the safeguards against tyranny and enable the establishment of a dictatorship through legal means.</p>
+                    
+                    <p>This critique points to a fundamental challenge in constitutional design: how to prevent a governance system from being subverted or undermined by its own rules and procedures. In other words, how to guard against "procedural perversity."</p>
+                </div>
+                <div class="column">
+                    <h4>Application to DAO Governance</h4>
+                    <p>DAOs face similar risks of procedural perversity, potentially exacerbated by their reliance on smart contracts and code. For example:</p>
+                    <ul>
+                        <li><strong>Governance Capture:</strong> Large token holders could potentially modify voting rules to entrench their control</li>
+                        <li><strong>Amendment Loopholes:</strong> Poorly designed amendment processes could allow fundamental changes without adequate safeguards</li>
+                        <li><strong>Oracle Corruption:</strong> External data sources critical for governance could be manipulated</li>
+                        <li><strong>Unintended Code Behavior:</strong> Smart contracts might have unexpected vulnerabilities or edge cases</li>
+                    </ul>
+                    <p>The infamous "The DAO" hack of 2016 illustrates this risk, where an attacker exploited a vulnerability in the smart contract code to drain funds, leading to the contentious Ethereum hard fork.</p>
+                </div>
+            </div>
+            
+            <div class="case-study">
+                <h3>Case Study: The Decentraland DAO</h3>
+                <p>The Decentraland DAO governance illustrates both strengths and vulnerabilities in addressing procedural perversity:</p>
+                <ul>
+                    <li>Uses a bicameral system with a Security Advisory Board for technical oversight</li>
+                    <li>Implements timelocks on governance actions to allow community response to malicious proposals</li>
+                    <li>Requires graduated thresholds for different types of governance actions</li>
+                    <li>However, early governance was criticized for concentration of voting power</li>
+                    <li>Security Advisory Board creates potential centralization of critical governance functions</li>
+                </ul>
+                <p>This case demonstrates how DAOs must balance technical mechanisms against social governance to prevent procedural perversity, often resulting in hybrid systems rather than pure code-based governance.</p>
+            </div>
+            
+            <h3>Scalian Textualism and Originalism in DAO Governance</h3>
+            
+            <div class="tabs">
+                <div class="tabs-header">
+                    <button class="tab-button active" data-tab="legal-tab1">Textualist Approach</button>
+                    <button class="tab-button" data-tab="legal-tab2">Originalist Approach</button>
+                    <button class="tab-button" data-tab="legal-tab3">Implications</button>
+                </div>
+                
+                <div id="legal-tab1" class="tab-content active">
+                    <h4>Textualism in DAO Constitutions</h4>
+                    
+                    <p>Textualism, which emphasizes interpreting legal texts according to their plain meaning at the time of adoption, takes on new dimensions in the context of DAO governance where "code is law."</p>
+                    
+                    <p>In traditional constitutional interpretation, textualism involves examining:</p>
+                    <ul>
+                        <li>The ordinary meaning of the words used</li>
+                        <li>The grammatical structure and syntax</li>
+                        <li>The document as a whole, for context</li>
+                    </ul>
+                    
+                    <p>For DAOs, a textualist approach would involve:</p>
+                    <ul>
+                        <li>Strict interpretation of smart contract code functionality</li>
+                        <li>Prioritizing the literal operation of code over intended outcomes</li>
+                        <li>Examining both code and written constitutional documents in their plain meaning</li>
+                    </ul>
+                    
+                    <p>This raises the question: In a DAO where both natural language constitutions and code exist, which represents the authoritative "text" when conflicts arise? A strict textualist might argue that the code, being self-executing, represents the true "law" of the DAO.</p>
+                </div>
+                
+                <div id="legal-tab2" class="tab-content">
+                    <h4>Originalism in DAO Constitutions</h4>
+                    
+                    <p>Originalism holds that the Constitution should be interpreted according to the original understanding at the time of adoption. For DAOs, this raises fascinating questions about founder intent versus community evolution.</p>
+                    
+                    <p>Traditional originalism examines:</p>
+                    <ul>
+                        <li>The original public meaning of constitutional provisions</li>
+                        <li>The intentions of the framers and ratifiers</li>
+                        <li>Historical context to understand original meaning</li>
+                    </ul>
+                    
+                    <p>For DAOs, originalist interpretation might involve:</p>
+                    <ul>
+                        <li>Examining founder statements and whitepaper documents</li>
+                        <li>Analyzing git repositories and code comments for developer intent</li>
+                        <li>Considering community discussions leading to initial governance designs</li>
+                    </ul>
+                    
+                    <p>A key challenge for originalism in DAOs is that, unlike the U.S. Constitution which is difficult to amend, DAO governance is designed for evolution. This tension raises questions about whether initial founder intent should constrain later community decisions, particularly when the founding ethos often emphasizes progressive decentralization.</p>
+                </div>
+                
+                <div id="legal-tab3" class="tab-content">
+                    <h4>Implications for DAO Dispute Resolution</h4>
+                    
+                    <p>The application of textualism and originalism to DAO governance has significant implications for how disputes are resolved in decentralized contexts:</p>
+                    
+                    <div class="columns">
+                        <div class="column">
+                            <h5>Advantages</h5>
+                            <ul>
+                                <li><strong>Predictability:</strong> Clear interpretive rules enhance certainty</li>
+                                <li><strong>Constraint:</strong> Limits subjective or arbitrary decision-making</li>
+                                <li><strong>Legitimacy:</strong> Grounds decisions in founding documents</li>
+                                <li><strong>Stability:</strong> Maintains consistency in governance outcomes</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h5>Challenges</h5>
+                            <ul>
+                                <li><strong>Code vs. Intent:</strong> Smart contracts may not capture all nuances of intent</li>
+                                <li><strong>Evolving Norms:</strong> Community values and needs change over time</li>
+                                <li><strong>Technical Limitations:</strong> Original code may contain bugs or vulnerabilities</li>
+                                <li><strong>Contextual Shifts:</strong> Changing external environment may require adaptation</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <p>These tensions highlight why many DAOs develop hybrid governance systems that include both immutable elements (similar to constitutional entrenchment) and flexible mechanisms for adaptation and dispute resolution that can mediate between strict textualism and evolving community needs.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- DAOs Section -->
     <section id="daos" class="fade-in">
         <div class="container">
             <div class="section-header">
                 <h2>Decentralized Autonomous Organizations (DAOs)</h2>
+                <p>Exploring the foundational characteristics, governance structures, and constitutional implications of these blockchain-based organizations.</p>
             </div>
             
             <h3>Defining DAOs</h3>
+            
             <div class="columns">
                 <div class="column">
                     <p>A Decentralized Autonomous Organization (DAO) is an entity represented by rules encoded as computer programs called smart contracts that are transparent, governed by its members, and uninfluenced by central authorities. As defined by Vitalik Buterin, DAOs enable groups to unite around missions or objectives and coordinate using automated enforcement mechanisms on blockchain networks.</p>
+                    
                     <blockquote>
-                        "DAOs are an emergent organization structure that is prevalent in the ecosystem of the Ethereum blockchain. DAOs enable a group to unite around a mission or objective and coordinate using smart contracts, which are enforced immutably and autonomously on the blockchain."
+                        <p>"DAOs are an emergent organization structure that is prevalent in the ecosystem of the Ethereum blockchain. DAOs enable a group to unite around a mission or objective and coordinate using smart contracts, which are enforced immutably and autonomously on the blockchain."</p>
                         <cite>— Vitalik Buterin, co-founder of Ethereum</cite>
                     </blockquote>
                 </div>
                 <div class="column">
                     <div class="card">
-                        <h3>Key Characteristics of DAOs</h3>
-                        <ul>
-                            <li><strong>Decentralization:</strong> No central authority controls the organization</li>
-                            <li><strong>Autonomy:</strong> Operations occur through self-executing smart contracts</li>
-                            <li><strong>Transparency:</strong> All rules and transactions are visible on the blockchain</li>
-                            <li><strong>Token-based governance:</strong> Decision-making power distributed across members</li>
-                            <li><strong>Borderless:</strong> Operating across jurisdictional boundaries</li>
-                        </ul>
+                        <div class="card-body">
+                            <h3>Key Characteristics of DAOs</h3>
+                            <ul>
+                                <li><strong>Decentralization:</strong> No central authority controls the organization</li>
+                                <li><strong>Autonomy:</strong> Operations occur through self-executing smart contracts</li>
+                                <li><strong>Transparency:</strong> All rules and transactions are visible on the blockchain</li>
+                                <li><strong>Token-based governance:</strong> Decision-making power distributed across members</li>
+                                <li><strong>Borderless:</strong> Operating across jurisdictional boundaries</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1399,7 +2110,7 @@ Article VI: Constitutional Amendment
                     </div>
                 </div>
                 
-                <button class="btn" id="analyze-constitution">Comprehensive Constitutional Analysis</button>
+                <button class="btn btn-primary" id="analyze-constitution">Comprehensive Constitutional Analysis</button>
                 <div id="constitution-analysis" style="display: none;">
                     <h4>Comparative Constitutional Analysis</h4>
                     <p>This simulated DAO constitution reveals important insights about the evolution of constitutional principles in digital contexts:</p>
@@ -1492,10 +2203,12 @@ Article VI: Constitutional Amendment
         </div>
     </section>
 
+    <!-- Network States Section -->
     <section id="network-states" class="fade-in">
         <div class="container">
             <div class="section-header">
                 <h2>Network States</h2>
+                <p>Exploring the concept of network states as an evolution of DAOs and their implications for traditional constitutional frameworks.</p>
             </div>
             
             <div class="columns">
@@ -1503,22 +2216,24 @@ Article VI: Constitutional Amendment
                     <h3>Defining Network States</h3>
                     <p>Building upon the foundation of DAOs, network states represent an evolution in digital governance structures. As conceptualized by Balaji Srinivasan, a network state is:</p>
                     <blockquote>
-                        "A social network with a moral innovation, a sense of national consciousness, a recognized founder, a capacity for collective action, an in-person level of civility, an integrated cryptocurrency, a consensual government limited by a social smart contract, an archipelago of crowdfunded physical territories, a virtual capital, and an on-chain census that proves a large enough population, income, and real-estate footprint to attain diplomatic recognition from pre-existing states."
+                        <p>"A social network with a moral innovation, a sense of national consciousness, a recognized founder, a capacity for collective action, an in-person level of civility, an integrated cryptocurrency, a consensual government limited by a social smart contract, an archipelago of crowdfunded physical territories, a virtual capital, and an on-chain census that proves a large enough population, income, and real-estate footprint to attain diplomatic recognition from pre-existing states."</p>
                         <cite>— Balaji Srinivasan, The Network State</cite>
                     </blockquote>
                     <p>Network states represent a fundamental challenge to the traditional Westphalian nation-state system, as they derive legitimacy and authority from voluntary participation and consensus rather than territorial control or monopoly on violence.</p>
                 </div>
                 <div class="column">
                     <div class="card">
-                        <h3>Constitutive Elements of Network States</h3>
-                        <ul>
-                            <li><strong>Digital-First Existence:</strong> Primary identity and operations in the digital realm</li>
-                            <li><strong>Shared Purpose:</strong> United around specific values or objectives</li>
-                            <li><strong>Voluntary Membership:</strong> Opt-in citizenship rather than birth-based</li>
-                            <li><strong>Blockchain Governance:</strong> Built on DAO infrastructure for decision-making</li>
-                            <li><strong>Physical Manifestation:</strong> Eventually acquiring territorial outposts</li>
-                            <li><strong>Pursuit of Recognition:</strong> Seeking sovereignty in the international system</li>
-                        </ul>
+                        <div class="card-body">
+                            <h3>Constitutive Elements of Network States</h3>
+                            <ul>
+                                <li><strong>Digital-First Existence:</strong> Primary identity and operations in the digital realm</li>
+                                <li><strong>Shared Purpose:</strong> United around specific values or objectives</li>
+                                <li><strong>Voluntary Membership:</strong> Opt-in citizenship rather than birth-based</li>
+                                <li><strong>Blockchain Governance:</strong> Built on DAO infrastructure for decision-making</li>
+                                <li><strong>Physical Manifestation:</strong> Eventually acquiring territorial outposts</li>
+                                <li><strong>Pursuit of Recognition:</strong> Seeking sovereignty in the international system</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1527,11 +2242,11 @@ Article VI: Constitutional Amendment
             
             <div class="flowchart">
                 <div class="flowchart-item">Online Communities</div>
-                <div class="flowchart-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flowchart-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
                 <div class="flowchart-item">DAOs</div>
-                <div class="flowchart-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flowchart-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
                 <div class="flowchart-item">Network Unions</div>
-                <div class="flowchart-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flowchart-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
                 <div class="flowchart-item">Network States</div>
             </div>
             
@@ -1656,36 +2371,42 @@ Article VI: Constitutional Amendment
             
             <h3>Constitutional Design Challenges</h3>
             
-            <p>Network states face unique constitutional design challenges that differ from both traditional nation-states and pure DAOs:</p>
-            
             <div class="cards">
                 <div class="card">
-                    <h4>Jurisdiction Complexity</h4>
-                    <p>Network states must navigate the interplay between digital governance and physical presence in multiple territories, each with their own legal systems. This creates multi-layered jurisdiction questions that have no clear precedent in constitutional law.</p>
+                    <div class="card-body">
+                        <h4>Jurisdiction Complexity</h4>
+                        <p>Network states must navigate the interplay between digital governance and physical presence in multiple territories, each with their own legal systems. This creates multi-layered jurisdiction questions that have no clear precedent in constitutional law.</p>
+                    </div>
                 </div>
                 <div class="card">
-                    <h4>Sovereignty Recognition</h4>
-                    <p>Without traditional territorial sovereignty, network states must develop alternative pathways to international recognition. This may require constitutional innovations that demonstrate long-term viability and capacity for diplomatic relations.</p>
+                    <div class="card-body">
+                        <h4>Sovereignty Recognition</h4>
+                        <p>Without traditional territorial sovereignty, network states must develop alternative pathways to international recognition. This may require constitutional innovations that demonstrate long-term viability and capacity for diplomatic relations.</p>
+                    </div>
                 </div>
                 <div class="card">
-                    <h4>Rights Enforcement</h4>
-                    <p>Constitutional protections in network states require enforcement mechanisms beyond code alone. Designing systems that protect rights across digital and physical domains presents novel constitutional engineering challenges.</p>
+                    <div class="card-body">
+                        <h4>Rights Enforcement</h4>
+                        <p>Constitutional protections in network states require enforcement mechanisms beyond code alone. Designing systems that protect rights across digital and physical domains presents novel constitutional engineering challenges.</p>
+                    </div>
                 </div>
                 <div class="card">
-                    <h4>Governance Scalability</h4>
-                    <p>As network states grow, they must develop constitutional structures that can scale effectively while maintaining founding principles and preventing capture by powerful interests - a challenge familiar to traditional constitutionalism but with distinct technical dimensions.</p>
+                    <div class="card-body">
+                        <h4>Governance Scalability</h4>
+                        <p>As network states grow, they must develop constitutional structures that can scale effectively while maintaining founding principles and preventing capture by powerful interests - a challenge familiar to traditional constitutionalism but with distinct technical dimensions.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Constitutional Design Section -->
     <section id="constitutional-design" class="fade-in">
         <div class="container">
             <div class="section-header">
                 <h2>Constitutional Design for Digital Governance</h2>
+                <p>Exploring frameworks and methodologies for designing effective constitutional structures for decentralized digital communities.</p>
             </div>
-            
-            <p>The emergence of DAOs and network states necessitates innovative approaches to constitutional design that can adapt traditional principles to digital governance contexts. This section explores frameworks and methodologies for designing constitutions that effectively govern decentralized digital communities.</p>
             
             <h3>Cybernetic Approaches to DAO Governance</h3>
             
@@ -1703,13 +2424,15 @@ Article VI: Constitutional Amendment
                 </div>
                 <div class="column">
                     <div class="card">
-                        <h3>Key Cybernetic Principles for DAO Constitutions</h3>
-                        <ul>
-                            <li><strong>Requisite Variety:</strong> A system must have sufficient internal variety to cope with the variety in its environment</li>
-                            <li><strong>Viability:</strong> Constitutional structures must balance stability with adaptability</li>
-                            <li><strong>Feedback Control:</strong> Governance must incorporate feedback mechanisms for self-correction</li>
-                            <li><strong>Recursive Governance:</strong> Nested decision-making structures at appropriate scales</li>
-                        </ul>
+                        <div class="card-body">
+                            <h3>Key Cybernetic Principles for DAO Constitutions</h3>
+                            <ul>
+                                <li><strong>Requisite Variety:</strong> A system must have sufficient internal variety to cope with the variety in its environment</li>
+                                <li><strong>Viability:</strong> Constitutional structures must balance stability with adaptability</li>
+                                <li><strong>Feedback Control:</strong> Governance must incorporate feedback mechanisms for self-correction</li>
+                                <li><strong>Recursive Governance:</strong> Nested decision-making structures at appropriate scales</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1727,8 +2450,6 @@ Article VI: Constitutional Amendment
             </div>
             
             <h3>Constitutional Mechanisms for Decentralized Power</h3>
-            
-            <p>Effective constitutional design for DAOs and network states requires careful consideration of how power is distributed and checked across the system. Drawing from both traditional constitutional theory and cybernetic approaches, several key mechanisms emerge:</p>
             
             <div class="tabs">
                 <div class="tabs-header">
@@ -1815,13 +2536,13 @@ Article VI: Constitutional Amendment
                     
                     <div class="flowchart">
                         <div class="flowchart-item">Proposal Submission<br><small>(With threshold requirements)</small></div>
-                        <div class="flowchart-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flowchart-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
                         <div class="flowchart-item">Deliberation Period<br><small>(Discussion and debate)</small></div>
-                        <div class="flowchart-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flowchart-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
                         <div class="flowchart-item">Supermajority Vote<br><small>(Higher threshold than normal)</small></div>
-                        <div class="flowchart-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flowchart-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
                         <div class="flowchart-item">Timelock Period<br><small>(For final review)</small></div>
-                        <div class="flowchart-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flowchart-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
                         <div class="flowchart-item">Implementation<br><small>(Code update)</small></div>
                     </div>
                     
@@ -1841,7 +2562,7 @@ Article VI: Constitutional Amendment
             
             <div class="vote-simulation">
                 <h4>Interactive DAO Voting Simulation</h4>
-                <p>Experience how constitutional principles shape governance outcomes in DAOs:</p>
+                <p>Experience how different constitutional design choices influence governance outcomes in DAOs:</p>
                 
                 <div class="proposal">
                     <h5>Proposal: Establish Judicial Review Committee</h5>
@@ -1921,16 +2642,18 @@ Article VI: Constitutional Amendment
                         <li><strong>Quadratic Voting:</strong> Balances individual rights with protection against wealth concentration, embodying the constitutional principle that power should not be concentrated in the hands of the few</li>
                         <li><strong>Conviction Voting:</strong> Rewards long-term commitment and reduces governance attacks, reflecting constitutional principles of stability and protection against transient factions</li>
                     </ul>
-                    <p>The proposed Judicial Review Committee itself represents a constitutional innovation that parallels the development of judicial review in traditional governance systems. Just as Marbury v. Madison established the power of courts to strike down laws contrary to the constitution, this proposal would create a specialized body with similar powers within the DAO ecosystem. These constitutional design choices demonstrate how technical mechanisms in DAOs perform functions analogous to traditional constitutional structures in nation-states, but with potentially greater precision and adaptability.</p>
+                    <p>The proposed Judicial Review Committee itself represents a constitutional innovation that parallels the development of judicial review in traditional governance systems. Just as Marbury v. Madison established the power of courts to strike down laws contrary to the constitution, this proposal would create a specialized body with similar powers within the DAO ecosystem.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Legal Challenges Section -->
     <section id="legal-challenges" class="fade-in">
         <div class="container">
             <div class="section-header">
                 <h2>Legal Challenges in the Digital Constitutional Space</h2>
+                <p>Examining the complex legal issues that arise at the intersection of traditional legal systems and decentralized digital governance.</p>
             </div>
             
             <h3>Internet Jurisdiction and DAOs</h3>
@@ -1955,516 +2678,3 @@ Article VI: Constitutional Amendment
                         </ul>
                         <p>This case highlights the tension between traditional jurisdictional doctrines and the borderless nature of DAOs, raising significant constitutional questions about due process and fair notice.</p>
                     </div>
-                </div>
-            </div>
-            
-            <h3>Applying Lessons from Kurt Gödel to DAO Governance</h3>
-            
-            <p>Kurt Gödel's critique of the U.S. Constitution and his concept of "procedural perversity" offer valuable insights into the challenges of designing robust governance systems for DAOs and network states.</p>
-            
-            <div class="columns">
-                <div class="column">
-                    <h4>Gödel's Constitutional Insights</h4>
-                    <p>In preparation for his U.S. citizenship exam in 1947, Gödel identified a potential "loophole" in Article V of the U.S. Constitution, which outlines the process for amending the Constitution. As Gödel observed, since Article V does not explicitly prohibit amendments to the amendment process itself, it could theoretically be used to eliminate the safeguards against tyranny and enable the establishment of a dictatorship through legal means.</p>
-                    
-                    <p>This critique points to a fundamental challenge in constitutional design: how to prevent a governance system from being subverted or undermined by its own rules and procedures. In other words, how to guard against "procedural perversity."</p>
-                </div>
-                <div class="column">
-                    <h4>Application to DAO Governance</h4>
-                    <p>DAOs face similar risks of procedural perversity, potentially exacerbated by their reliance on smart contracts and code. For example:</p>
-                    <ul>
-                        <li><strong>Governance Capture:</strong> Large token holders could potentially modify voting rules to entrench their control</li>
-                        <li><strong>Amendment Loopholes:</strong> Poorly designed amendment processes could allow fundamental changes without adequate safeguards</li>
-                        <li><strong>Oracle Corruption:</strong> External data sources critical for governance could be manipulated</li>
-                        <li><strong>Unintended Code Behavior:</strong> Smart contracts might have unexpected vulnerabilities or edge cases</li>
-                    </ul>
-                    <p>The infamous "The DAO" hack of 2016 illustrates this risk, where an attacker exploited a vulnerability in the smart contract code to drain funds, leading to the contentious Ethereum hard fork.</p>
-                </div>
-            </div>
-            
-            <div class="case-study">
-                <h3>Case Study: The Decentraland DAO</h3>
-                <p>The Decentraland DAO governance illustrates both strengths and vulnerabilities in addressing procedural perversity:</p>
-                <ul>
-                    <li>Uses a bicameral system with a Security Advisory Board for technical oversight</li>
-                    <li>Implements timelocks on governance actions to allow community response to malicious proposals</li>
-                    <li>Requires graduated thresholds for different types of governance actions</li>
-                    <li>However, early governance was criticized for concentration of voting power</li>
-                    <li>Security Advisory Board creates potential centralization of critical governance functions</li>
-                </ul>
-                <p>This case demonstrates how DAOs must balance technical mechanisms against social governance to prevent procedural perversity, often resulting in hybrid systems rather than pure code-based governance.</p>
-            </div>
-            
-            <h3>Scalian Textualism and Originalism Considerations in DAO Governance</h3>
-            
-            <p>The constitutional interpretation theories of textualism and originalism, prominently advocated by the late Justice Antonin Scalia, provide an interesting lens through which to analyze DAO governance and smart contract interpretation.</p>
-            
-            <div class="tabs">
-                <div class="tabs-header">
-                    <button class="tab-button active" data-tab="legal-tab1">Textualist Approach</button>
-                    <button class="tab-button" data-tab="legal-tab2">Originalist Approach</button>
-                    <button class="tab-button" data-tab="legal-tab3">Implications</button>
-                </div>
-                
-                <div id="legal-tab1" class="tab-content active">
-                    <h4>Textualism in DAO Constitutions</h4>
-                    
-                    <p>Textualism, which emphasizes interpreting legal texts according to their plain meaning at the time of adoption, takes on new dimensions in the context of DAO governance where "code is law."</p>
-                    
-                    <p>In traditional constitutional interpretation, textualism involves examining:</p>
-                    <ul>
-                        <li>The ordinary meaning of the words used</li>
-                        <li>The grammatical structure and syntax</li>
-                        <li>The document as a whole, for context</li>
-                    </ul>
-                    
-                    <p>For DAOs, a textualist approach would involve:</p>
-                    <ul>
-                        <li>Strict interpretation of smart contract code functionality</li>
-                        <li>Prioritizing the literal operation of code over intended outcomes</li>
-                        <li>Examining both code and written constitutional documents in their plain meaning</li>
-                    </ul>
-                    
-                    <p>This raises the question: In a DAO where both natural language constitutions and code exist, which represents the authoritative "text" when conflicts arise? A strict textualist might argue that the code, being self-executing, represents the true "law" of the DAO.</p>
-                </div>
-                
-                <div id="legal-tab2" class="tab-content">
-                    <h4>Originalism in DAO Constitutions</h4>
-                    
-                    <p>Originalism holds that the Constitution should be interpreted according to the original understanding at the time of adoption. For DAOs, this raises fascinating questions about founder intent versus community evolution.</p>
-                    
-                    <p>Traditional originalism examines:</p>
-                    <ul>
-                        <li>The original public meaning of constitutional provisions</li>
-                        <li>The intentions of the framers and ratifiers</li>
-                        <li>Historical context to understand original meaning</li>
-                    </ul>
-                    
-                    <p>For DAOs, originalist interpretation might involve:</p>
-                    <ul>
-                        <li>Examining founder statements and whitepaper documents</li>
-                        <li>Analyzing git repositories and code comments for developer intent</li>
-                        <li>Considering community discussions leading to initial governance designs</li>
-                    </ul>
-                    
-                    <p>A key challenge for originalism in DAOs is that, unlike the U.S. Constitution which is difficult to amend, DAO governance is designed for evolution. This tension raises questions about whether initial founder intent should constrain later community decisions, particularly when the founding ethos often emphasizes progressive decentralization. This parallels Justice Scalia's own challenges in applying originalism to modern contexts that the framers could never have anticipated.</p>
-                </div>
-                
-                <div id="legal-tab3" class="tab-content">
-                    <h4>Implications for DAO Dispute Resolution</h4>
-                    
-                    <p>The application of textualism and originalism to DAO governance has significant implications for how disputes are resolved in decentralized contexts:</p>
-                    
-                    <div class="columns">
-                        <div class="column">
-                            <h5>Advantages</h5>
-                            <ul>
-                                <li><strong>Predictability:</strong> Clear interpretive rules enhance certainty</li>
-                                <li><strong>Constraint:</strong> Limits subjective or arbitrary decision-making</li>
-                                <li><strong>Legitimacy:</strong> Grounds decisions in founding documents</li>
-                                <li><strong>Stability:</strong> Maintains consistency in governance outcomes</li>
-                            </ul>
-                        </div>
-                        <div class="column">
-                            <h5>Challenges</h5>
-                            <ul>
-                                <li><strong>Code vs. Intent:</strong> Smart contracts may not capture all nuances of intent</li>
-                                <li><strong>Evolving Norms:</strong> Community values and needs change over time</li>
-                                <li><strong>Technical Limitations:</strong> Original code may contain bugs or vulnerabilities</li>
-                                <li><strong>Contextual Shifts:</strong> Changing external environment may require adaptation</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <p>These tensions highlight why many DAOs develop hybrid governance systems that include both immutable elements (similar to constitutional entrenchment) and flexible mechanisms for adaptation and dispute resolution that can mediate between strict textualism and evolving community needs.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="case-studies" class="fade-in">
-        <div class="container">
-            <div class="section-header">
-                <h2>Case Studies in Digital Constitutionalism</h2>
-            </div>
-            
-            <h3>The Wyoming DAO Experiment</h3>
-            
-            <div class="columns">
-                <div class="column">
-                    <p>Wyoming's pioneering legislation recognizing DAOs as legal entities provides a critical case study in how traditional legal systems can accommodate novel digital governance structures. In 2021, Wyoming enacted a law that recognized DAOs as a type of Limited Liability Company (LLC), creating the first comprehensive legal framework for DAOs in the United States.</p>
-                    
-                    <p>Key provisions of the Wyoming DAO LLC law include:</p>
-                    <ul>
-                        <li>Recognition of smart contracts as a means of governance</li>
-                        <li>Limited liability protection for DAO members</li>
-                        <li>Requirements for articles of organization</li>
-                        <li>Default rules that apply if smart contracts are silent</li>
-                        <li>Provisions for dispute resolution</li>
-                    </ul>
-                    
-                    <p>This legislation represents a significant step toward integrating DAOs into the existing legal framework, bridging the gap between code-based governance and traditional legal structures.</p>
-                </div>
-                <div class="column">
-                    <div class="case-study">
-                        <h3>Constitutional Implications</h3>
-                        <p>From a constitutional perspective, the Wyoming DAO law exemplifies principles of federalism and state autonomy. The U.S. Constitution's Tenth Amendment reserves powers not delegated to the federal government to the states, allowing Wyoming to exercise its state power to create innovative legal frameworks.</p>
-                        
-                        <p>However, this arrangement also creates potential tensions:</p>
-                        <ul>
-                            <li><strong>Federal Preemption:</strong> Federal securities laws may still apply to DAO tokens</li>
-                            <li><strong>Interstate Commerce:</strong> DAOs operating across state lines face complex jurisdictional questions</li>
-                            <li><strong>International Law:</strong> DAOs with global membership may be subject to conflicting legal regimes</li>
-                        </ul>
-                        
-                        <p>The Wyoming experiment illustrates both the adaptability of the American federal system and the challenges of accommodating truly borderless entities within a system designed for territorial jurisdiction.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <h3>Token Engineering and Constitutional Design</h3>
-            
-            <p>Token engineering represents a novel approach to constitutional design that seeks to align incentives through cryptoeconomic mechanisms. This discipline applies principles from mechanism design, game theory, and behavioral economics to create governance systems that encourage desired behaviors through carefully crafted incentive structures.</p>
-            
-            <div class="case-study">
-                <h3>Case Study: Maker DAO Governance</h3>
-                <p>MakerDAO provides a sophisticated example of token engineering as constitutional design:</p>
-                <ul>
-                    <li>Uses a dual-token system (MKR governance tokens and DAI stablecoins)</li>
-                    <li>MKR holders vote on risk parameters and system upgrades</li>
-                    <li>Token value is directly tied to system performance, creating aligned incentives</li>
-                    <li>Implemented a gradual transition from Foundation control to decentralized governance</li>
-                    <li>Established specialized domain teams with delegated authority</li>
-                </ul>
-                <p>MakerDAO's governance exemplifies how token engineering can create constitutional systems with sophisticated checks and balances while maintaining decentralization. The system's resilience during the 2020 crypto market crash demonstrated the effectiveness of this approach under stress.</p>
-            </div>
-            
-            <h3>Emerging Network State Experiments</h3>
-            
-            <p>While fully realized network states do not yet exist, several projects are experimenting with elements of the network state concept, providing valuable insights into the constitutional challenges and opportunities they present.</p>
-            
-            <div class="cards">
-                <div class="card">
-                    <h4>Praxis</h4>
-                    <p>Praxis is developing a network state focused on building a new city founded on shared values and governance innovations:</p>
-                    <ul>
-                        <li>Blending digital citizenship with physical community building</li>
-                        <li>Creating governance tools for community decision-making</li>
-                        <li>Developing land acquisition strategies for territorial presence</li>
-                        <li>Building digital identity and reputation systems</li>
-                    </ul>
-                    <p>Praxis illustrates the challenge of translating digital governance concepts into physical reality while maintaining coherent constitutional principles across domains.</p>
-                </div>
-                <div class="card">
-                    <h4>CityDAO</h4>
-                    <p>CityDAO purchased land in Wyoming to experiment with blockchain-based governance of physical property:</p>
-                    <ul>
-                        <li>Using NFTs to represent land ownership rights</li>
-                        <li>Creating governance processes for land use decisions</li>
-                        <li>Establishing membership tiers with different rights</li>
-                        <li>Working within existing legal frameworks while innovating</li>
-                    </ul>
-                    <p>CityDAO demonstrates how digital constitutional principles can be applied to governance of physical assets, highlighting both possibilities and limitations in the current legal environment.</p>
-                </div>
-                <div class="card">
-                    <h4>Nation3</h4>
-                    <p>Nation3 aims to build a cloud nation with its own jurisdiction for the internet economy:</p>
-                    <ul>
-                        <li>Creating a digital jurisdiction for contracts and dispute resolution</li>
-                        <li>Developing passport NFTs for citizenship</li>
-                        <li>Building a treasury for public goods funding</li>
-                        <li>Establishing governance mechanisms for policy decisions</li>
-                    </ul>
-                    <p>Nation3 focuses on creating legal infrastructure for digital activity, highlighting how network states might develop specialized governance services that complement rather than replace traditional state functions.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="conclusion" class="fade-in">
-        <div class="container">
-            <div class="section-header">
-                <h2>Conclusion</h2>
-            </div>
-            
-            <div class="columns">
-                <div class="column">
-                    <h3>Synthesis of Research Insights</h3>
-                    <p>Our exploration of DAOs and network states through the lens of constitutional law reveals several key insights:</p>
-                    <ol>
-                        <li><strong>Hybrid Constitutionalism:</strong> The most effective DAO governance structures blend code-based enforcement with human interpretation through textual constitutions, creating a new form of constitutional practice that leverages both technical precision and social consensus.</li>
-                        <li><strong>Sovereignty Reimagined:</strong> Network states challenge traditional notions of sovereignty based on territorial control, suggesting a future where sovereign entities might be defined by shared purpose and values rather than geography.</li>
-                        <li><strong>Constitutional Design Innovation:</strong> DAOs are pioneering new approaches to constitutional design that leverage mechanism design, token engineering, and cryptographic guarantees to create governance systems with novel properties.</li>
-                        <li><strong>Legal Adaptation Challenges:</strong> Traditional legal systems face significant challenges in accommodating borderless, code-based entities, though experiments like the Wyoming DAO law show potential pathways for integration.</li>
-                        <li><strong>Substantive Constitutional Values:</strong> Despite their technical novelty, DAOs and network states grapple with the same fundamental constitutional questions that have defined governance for centuries: balancing rights, distributing power, ensuring representation, and maintaining legitimacy.</li>
-                    </ol>
-                </div>
-                <div class="column">
-                    <h3>Future Directions for Digital Constitutionalism</h3>
-                    <p>As DAOs and network states continue to evolve, several promising directions for future research and development emerge:</p>
-                    <ul>
-                        <li><strong>Interoperability Frameworks:</strong> Developing constitutional principles for collaboration between DAOs, network states, and traditional legal systems</li>
-                        <li><strong>Judicial Functions:</strong> Creating more sophisticated dispute resolution systems that can interpret constitutional principles across code and social contexts</li>
-                        <li><strong>Digital Rights Expansion:</strong> Articulating and protecting a broader set of rights specific to digital governance contexts</li>
-                        <li><strong>Legitimacy Mechanisms:</strong> Exploring how digital governance systems can establish and maintain legitimacy without traditional sources of authority</li>
-                        <li><strong>Adaptive Governance:</strong> Designing constitutional systems that can evolve responsively while maintaining core principles</li>
-                    </ul>
-                    <p>These directions suggest that digital constitutionalism is not merely adapting traditional principles to new technologies, but potentially developing entirely new approaches to governance that could ultimately influence how we understand constitutional law in all contexts.</p>
-                </div>
-            </div>
-            
-            <h3>Broader Implications for Constitutional Theory</h3>
-            
-            <p>The emergence of DAOs and network states has profound implications for constitutional theory that extend beyond the digital realm:</p>
-            
-            <div class="cards">
-                <div class="card">
-                    <h4>Voluntary Association</h4>
-                    <p>DAOs demonstrate that effective governance can be built on voluntary association rather than territorial birth, challenging assumptions about the necessary foundations of constitutional legitimacy. This may influence how we understand consent and legitimacy in all governance contexts.</p>
-                </div>
-                <div class="card">
-                    <h4>Constitutional Experimentation</h4>
-                    <p>The rapid iteration and experimentation possible in DAO governance enables testing constitutional designs at unprecedented speed, potentially accelerating our understanding of effective governance mechanisms and creating knowledge that can benefit traditional constitutional systems.</p>
-                </div>
-                <div class="card">
-                    <h4>Pluralistic Sovereignty</h4>
-                    <p>Network states suggest a future where multiple forms of sovereignty might coexist, with individuals holding various forms of "citizenship" simultaneously. This could revitalize federalist and cosmopolitan theories that have struggled with territorial limitations.</p>
-                </div>
-                <div class="card">
-                    <h4>Technologically-Enforced Rights</h4>
-                    <p>Smart contracts offer the possibility of rights that are cryptographically guaranteed rather than merely legally protected, potentially changing how we think about the relationship between constitutional rights and their enforcement mechanisms.</p>
-                </div>
-            </div>
-            
-            <div class="case-study">
-                <h3>Final Thoughts</h3>
-                <p>The reconceptualization of constitutionalism for the digital era represents not just an adaptation of existing principles to new technologies, but a fundamental rethinking of how governance operates in a world where code, community, and conviction can create new forms of political organization.</p>
-                <p>As Tarunabh Khaitan and others argue in "Constitutional Resilience in South Asia" (2023), constitutional systems derive their strength not just from formal structures but from their ability to adapt while maintaining core principles. DAOs and network states are testing the boundaries of this adaptability, potentially revealing new pathways for constitutional development across all contexts.</p>
-                <p>By continuing to explore these emerging governance forms through the lens of comparative constitutional law, we can gain valuable insights not just into the future of digital governance, but into the fundamental nature of constitutionalism itself.</p>
-            </div>
-        </div>
-    </section>
-
-    <div class="modal" id="abstract-modal">
-        <div class="modal-content">
-            <span class="close-modal" id="close-abstract">&times;</span>
-            <h2>Abstract</h2>
-            <p>This research undertakes a rigorous and comprehensive exploratory study into the nascent governance architectures of Decentralized Autonomous Organizations (DAOs) and the conceptual emergence of network states within the contemporary digital era. It probes the recontextualization of constitutionalism in the rapidly evolving landscape of digital governance and autonomous collectives, positing that the advent of DAOs necessitates a fundamental reevaluation of traditional governance principles to suit the decentralized and often borderless nature of online communities.</p>
-            <p>Employing a robust mixed-methods approach that encompasses a meticulous historical review, in-depth textual analysis, and incisive case studies, this study dissects the unique characteristics of digital constitutions, smart contracts, and the systemic governance frameworks that underpin DAOs. It reflects on the roots of constitutionalism in online spaces, tracing its trajectory from the early USENET groups to the sophisticated entities within the burgeoning Web3 ecosystem. The investigation delves into the multifaceted legal and procedural challenges these organizations face, such as personal jurisdiction issues and the adaptation of seminal principles from significant constitutional thinkers, including Kurt Gödel's seminal remarks on procedural perversity and Antonin Scalia's influential textualist approach.</p>
-            <p>The research provides a critical examination of the Wyoming DAO experiment as a microcosm for understanding the complex interaction between DAOs and nation-states. Furthermore, it ventures into the realm of cybernetic and constitutional theories to propose innovative models of governance that can foster the decentralization of power, culminating in the groundbreaking concept of network states.</p>
-            <p>Strategic recommendations for the development of future DAO constitutions are presented, supported by principles gleaned from an exhaustive analysis of existing governance documents and technical publication standards. The study underscores the paramount importance of establishing robust constitutional frameworks to maintain the integrity and functionality of DAOs as they continue to amass substantial resources and wield increasing influence within the digital realm.</p>
-        </div>
-    </div>
-
-    <div class="scroll-top" id="scroll-top">
-        <i class="fas fa-arrow-up"></i>
-    </div>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Digital Constitutionalism Research Project</p>
-            <ul class="footer-links">
-                <li><a href="#intro">Introduction</a></li>
-                <li><a href="#daos">DAOs</a></li>
-                <li><a href="#network-states">Network States</a></li>
-                <li><a href="#constitutional-design">Constitutional Design</a></li>
-                <li><a href="#legal-challenges">Legal Challenges</a></li>
-            </ul>
-            <p>Presented by: Akshat, Alok and Amol</p>
-        </div>
-    </footer>
-
-    <script>
-        // Observer for fade-in animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.1
-        });
-
-        document.querySelectorAll('.fade-in').forEach(element => {
-            observer.observe(element);
-        });
-
-        // Progress bar
-        window.onscroll = function() {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById("progress-bar").style.width = scrolled + "%";
-            
-            // Show/hide scroll to top button
-            const scrollTop = document.getElementById("scroll-top");
-            if (winScroll > 300) {
-                scrollTop.classList.add("visible");
-            } else {
-                scrollTop.classList.remove("visible");
-            }
-        };
-
-        // Mobile menu toggle
-        document.getElementById("mobile-menu").addEventListener("click", function() {
-            document.querySelector(".nav-links").classList.toggle("show");
-        });
-
-        // Scroll to top
-        document.getElementById("scroll-top").addEventListener("click", function() {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        });
-
-        // Tabs
-        const tabButtons = document.querySelectorAll(".tab-button");
-        tabButtons.forEach(button => {
-            button.addEventListener("click", function() {
-                const tabId = this.getAttribute("data-tab");
-                
-                // Get the parent tabs container
-                const tabsContainer = this.closest(".tabs");
-                
-                // Remove active class from all tab buttons in this container
-                tabsContainer.querySelectorAll(".tab-button").forEach(btn => {
-                    btn.classList.remove("active");
-                });
-                
-                // Remove active class from all tab contents in this container
-                tabsContainer.querySelectorAll(".tab-content").forEach(content => {
-                    content.classList.remove("active");
-                });
-                
-                // Add active class to clicked tab button
-                this.classList.add("active");
-                
-                // Add active class to corresponding tab content
-                document.getElementById(tabId).classList.add("active");
-            });
-        });
-
-        // Modal
-        const abstractModal = document.getElementById("abstract-modal");
-        const openAbstractBtn = document.getElementById("open-abstract");
-        const closeAbstractBtn = document.getElementById("close-abstract");
-
-        openAbstractBtn.addEventListener("click", function() {
-            abstractModal.style.display = "flex";
-        });
-
-        closeAbstractBtn.addEventListener("click", function() {
-            abstractModal.style.display = "none";
-        });
-
-        window.addEventListener("click", function(event) {
-            if (event.target === abstractModal) {
-                abstractModal.style.display = "none";
-            }
-        });
-
-        // Constitution analyzer
-        document.getElementById("analyze-constitution").addEventListener("click", function() {
-            const analysis = document.getElementById("constitution-analysis");
-            if (analysis.style.display === "none") {
-                analysis.style.display = "block";
-                this.textContent = "Hide Analysis";
-            } else {
-                analysis.style.display = "none";
-                this.textContent = "Comprehensive Constitutional Analysis";
-            }
-        });
-
-        // Voting simulation
-        function setupVoting(yesButtonId, noButtonId, resultId, resultTextId, yesPercentId, noPercentId, progressId, analysisId, simulationType) {
-            const yesButton = document.getElementById(yesButtonId);
-            const noButton = document.getElementById(noButtonId);
-            const result = document.getElementById(resultId);
-            const resultText = document.getElementById(resultTextId);
-            const yesPercent = document.getElementById(yesPercentId);
-            const noPercent = document.getElementById(noPercentId);
-            const progress = document.getElementById(progressId);
-            const analysis = document.getElementById(analysisId);
-            
-            let votes = { yes: 0, no: 0 };
-            
-            function updateResult() {
-                const total = votes.yes + votes.no;
-                if (total === 0) return;
-                
-                const yesPercentValue = Math.round((votes.yes / total) * 100);
-                const noPercentValue = Math.round((votes.no / total) * 100);
-                
-                yesPercent.textContent = yesPercentValue;
-                noPercent.textContent = noPercentValue;
-                progress.style.width = yesPercentValue + "%";
-                
-                if (yesPercentValue > noPercentValue) {
-                    resultText.textContent = "Proposal Passed";
-                    resultText.style.color = "var(--success)";
-                } else {
-                    resultText.textContent = "Proposal Rejected";
-                    resultText.style.color = "var(--danger)";
-                }
-                
-                // Different analysis based on voting type
-                if (simulationType === "token") {
-                    if (yesPercentValue > noPercentValue) {
-                        analysis.textContent = "In this token-based voting model, large token holders had significant influence. The proposal passed largely due to support from a few major stakeholders, demonstrating the plutocratic tendencies of simple token-based voting.";
-                    } else {
-                        analysis.textContent = "In this token-based voting model, despite support from some large token holders, broader community opposition defeated the proposal, showing the importance of widespread consensus even in plutocratic systems.";
-                    }
-                } else if (simulationType === "quadratic") {
-                    if (yesPercentValue > noPercentValue) {
-                        analysis.textContent = "Using quadratic voting, the proposal passed with broader community support. The quadratic cost structure reduced the influence of large token holders, allowing for more democratic outcomes that better reflect the true preferences of the community.";
-                    } else {
-                        analysis.textContent = "Using quadratic voting, the proposal was rejected despite support from some large stakeholders. This demonstrates how quadratic voting can protect against plutocratic capture by requiring much greater investment from large holders to dominate voting outcomes.";
-                    }
-                } else if (simulationType === "conviction") {
-                    if (yesPercentValue > noPercentValue) {
-                        analysis.textContent = "Under conviction voting, the proposal passed due to strong support from committed long-term stakeholders. This voting model prioritizes dedication to the project over mere token holdings, preventing short-term speculators from dictating governance.";
-                    } else {
-                        analysis.textContent = "Under conviction voting, the proposal was rejected because long-term community members opposed it. This demonstrates how conviction voting can protect DAOs against governance attacks and ensure decisions align with long-term stakeholder interests.";
-                    }
-                }
-            }
-            
-            yesButton.addEventListener("click", function() {
-                votes.yes += (simulationType === "token") ? 20 : (simulationType === "quadratic") ? 10 : 15;
-                updateResult();
-                result.style.display = "block";
-            });
-            
-            noButton.addEventListener("click", function() {
-                votes.no += (simulationType === "token") ? 10 : (simulationType === "quadratic") ? 15 : 10;
-                updateResult();
-                result.style.display = "block";
-            });
-        }
-        
-        // Set up each voting simulation
-        setupVoting("yes-vote-1", "no-vote-1", "vote-result-1", "result-text-1", "yes-percent-1", "no-percent-1", "vote-progress-1", "vote-analysis-1", "token");
-        setupVoting("yes-vote-2", "no-vote-2", "vote-result-2", "result-text-2", "yes-percent-2", "no-percent-2", "vote-progress-2", "vote-analysis-2", "quadratic");
-        setupVoting("yes-vote-3", "no-vote-3", "vote-result-3", "result-text-3", "yes-percent-3", "no-percent-3", "vote-progress-3", "vote-analysis-3", "conviction");
-        
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-                
-                // Close mobile menu if open
-                if (document.querySelector('.nav-links').classList.contains('show')) {
-                    document.querySelector('.nav-links').classList.remove('show');
-                }
-            });
-        });
-    </script>
-</body>
-</html>
