@@ -5,31 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Constitutionalism: DAOs and Network States</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <style>
         :root {
-            --primary: #1e3a8a;
-            --secondary: #3b82f6;
+            --primary: #1e40af;
+            --primary-light: #3b82f6;
+            --secondary: #6366f1;
             --accent: #93c5fd;
-            --background: #f8fafc;
-            --dark: #1e293b;
-            --text: #334155;
-            --light-text: #64748b;
-            --success: #22c55e;
-            --warning: #eab308;
+            --background: #f1f5f9;
+            --dark: #0f172a;
+            --text: #1e293b;
+            --light-text: #475569;
+            --card-bg: #ffffff;
+            --success: #10b981;
+            --warning: #f59e0b;
             --danger: #ef4444;
-            --border-radius: 10px;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --content-spacing: 3rem;
-            --section-spacing: 5rem;
-            --card-spacing: 1.5rem;
+            --border-radius: 8px;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --transition: all 0.3s ease;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
 
         html {
@@ -40,43 +42,58 @@
         body {
             background-color: var(--background);
             color: var(--text);
-            line-height: 1.7;
-            letter-spacing: 0.01em;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
         h1, h2, h3, h4, h5, h6 {
             font-weight: 700;
-            margin-bottom: 1.5rem;
             color: var(--dark);
             line-height: 1.3;
+            margin-bottom: 1.5rem;
         }
 
         h1 {
             font-size: 3rem;
-            margin-bottom: 2rem;
-            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            line-height: 1.1;
         }
 
         h2 {
             font-size: 2.25rem;
-            border-bottom: 3px solid var(--accent);
-            padding-bottom: 0.8rem;
-            margin-top: var(--content-spacing);
-            letter-spacing: -0.01em;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.75rem;
+            position: relative;
             display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 3px;
         }
 
         h3 {
             font-size: 1.75rem;
-            margin-top: 2.5rem;
+            margin-top: 2rem;
             margin-bottom: 1.25rem;
             color: var(--primary);
+            letter-spacing: -0.01em;
         }
 
         h4 {
             font-size: 1.4rem;
-            margin-top: 2rem;
+            margin-top: 1.75rem;
             margin-bottom: 1rem;
+            letter-spacing: -0.01em;
         }
 
         p {
@@ -86,7 +103,7 @@
         }
 
         a {
-            color: var(--secondary);
+            color: var(--primary-light);
             text-decoration: none;
             transition: var(--transition);
             font-weight: 500;
@@ -101,11 +118,14 @@
             max-width: 1280px;
             margin: 0 auto;
             padding: 0 2rem;
+            position: relative;
         }
 
         .btn {
-            display: inline-block;
-            background-color: var(--secondary);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-light);
             color: white;
             padding: 0.85rem 1.75rem;
             border-radius: var(--border-radius);
@@ -114,51 +134,46 @@
             border: none;
             font-weight: 600;
             text-align: center;
-            letter-spacing: 0.02em;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            letter-spacing: 0.01em;
+            box-shadow: var(--shadow);
+            gap: 0.5rem;
         }
 
         .btn:hover {
             background-color: var(--primary);
             text-decoration: none;
-            transform: translateY(-3px);
-            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         .btn-secondary {
             background-color: transparent;
-            border: 2px solid var(--secondary);
-            color: var(--secondary);
+            border: 2px solid var(--primary-light);
+            color: var(--primary-light);
         }
 
         .btn-secondary:hover {
-            background-color: var(--secondary);
+            background-color: var(--primary-light);
             color: white;
         }
 
-        .btn-success {
-            background-color: var(--success);
-        }
-
-        .btn-warning {
-            background-color: var(--warning);
-            color: var(--dark);
-        }
-
-        .btn-danger {
-            background-color: var(--danger);
-        }
+        .btn-success { background-color: var(--success); }
+        .btn-warning { background-color: var(--warning); color: var(--dark); }
+        .btn-danger { background-color: var(--danger); }
 
         /* Header */
         header {
-            background-color: var(--primary);
+            background-color: var(--dark);
             color: white;
-            padding: 1.25rem 0;
+            padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            background-color: rgba(15, 23, 42, 0.95);
         }
 
         nav {
@@ -168,9 +183,13 @@
         }
 
         .logo {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             font-weight: 800;
             letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #93c5fd, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .nav-links {
@@ -185,8 +204,8 @@
 
         .nav-links a {
             color: white;
-            font-weight: 600;
-            font-size: 1.05rem;
+            font-weight: 500;
+            font-size: 1rem;
             position: relative;
             padding-bottom: 0.25rem;
         }
@@ -196,9 +215,9 @@
             position: absolute;
             width: 0;
             height: 2px;
-            bottom: 0;
+            bottom: -4px;
             left: 0;
-            background-color: white;
+            background-color: var(--accent);
             transition: width 0.3s ease;
         }
 
@@ -221,7 +240,7 @@
             height: 100vh;
             display: flex;
             align-items: center;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
             color: white;
             padding-top: 80px;
             position: relative;
@@ -243,33 +262,45 @@
             max-width: 900px;
             margin: 0 auto;
             text-align: center;
-            padding: 2rem;
+            padding: 3rem;
             background: rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             border-radius: var(--border-radius);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-lg);
             z-index: 10;
             position: relative;
+            animation: fadeInUp 1s ease;
         }
 
-        .hero             h1 {
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 1.5rem;
             color: white;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            letter-spacing: -0.02em;
             line-height: 1.2;
             position: relative;
         }
-        
-        h1::after {
+
+        .hero h1::after {
             content: '';
             position: absolute;
             bottom: -0.75rem;
             left: 50%;
             transform: translateX(-50%);
             width: 200px;
-            height: 4px;
+            height: 3px;
             background: rgba(255, 255, 255, 0.6);
             border-radius: 2px;
         }
@@ -285,71 +316,64 @@
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
         /* Sections */
         section {
-            padding: var(--section-spacing) 0;
+            padding: 5rem 0;
             position: relative;
             overflow: hidden;
         }
 
         section:nth-child(even) {
             background-color: white;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.03);
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
             position: relative;
         }
 
         .section-header::after {
             content: '';
             position: absolute;
-            bottom: -1.5rem;
+            bottom: -1rem;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
+            width: 80px;
             height: 4px;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             border-radius: 2px;
-        }
-
-        .section-header h2 {
-            display: inline-block;
-            border-bottom: none;
-            font-weight: 800;
-            position: relative;
-            z-index: 2;
-        }
-
-        section .container {
-            position: relative;
-            z-index: 2;
         }
 
         /* Cards */
         .cards {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2.5rem;
+            gap: 2rem;
             margin-top: 3rem;
         }
 
         .card {
-            background-color: white;
+            background-color: var(--card-bg);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             padding: 2rem;
             transition: var(--transition);
-            border-top: 4px solid var(--accent);
+            border-top: 3px solid var(--accent);
             position: relative;
             overflow: hidden;
         }
 
         .card:hover {
-            transform: translateY(-7px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
         }
 
         .card::before {
@@ -359,7 +383,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(30, 58, 138, 0.05) 100%);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.03) 0%, rgba(30, 58, 138, 0.03) 100%);
             z-index: 0;
         }
 
@@ -370,12 +394,11 @@
 
         .card h3, .card h4 {
             margin-top: 0;
-            font-weight: 700;
             color: var(--primary);
         }
 
         .card-icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: var(--secondary);
             margin-bottom: 1.5rem;
             background: -webkit-linear-gradient(var(--secondary), var(--primary));
@@ -386,7 +409,7 @@
         /* Tabs */
         .tabs {
             margin: 3rem 0;
-            background-color: white;
+            background-color: var(--card-bg);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             overflow: hidden;
@@ -394,50 +417,39 @@
 
         .tabs-header {
             display: flex;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
             background-color: #f8fafc;
             position: relative;
             overflow-x: auto;
-            scrollbar-width: none;  /* Firefox */
-            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
         }
         
         .tabs-header::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
+            display: none;
         }
 
         .tab-button {
-            padding: 1rem 1.75rem;
+            padding: 1rem 1.5rem;
             background-color: transparent;
             border: none;
             cursor: pointer;
             font-weight: 600;
-            font-size: 1.05rem;
+            font-size: 1rem;
             color: var(--light-text);
-            border-bottom: 3px solid transparent;
             transition: var(--transition);
             white-space: nowrap;
             flex-shrink: 0;
             position: relative;
+            border-bottom: 3px solid transparent;
         }
 
         .tab-button:hover {
-            color: var(--secondary);
+            color: var(--primary);
         }
 
         .tab-button.active {
-            color: var(--secondary);
-            border-bottom-color: var(--secondary);
-            background-color: white;
-        }
-        
-        .tab-button.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 100%;
-            height: 1px;
+            color: var(--primary);
+            border-bottom-color: var(--primary);
             background-color: white;
         }
 
@@ -453,7 +465,7 @@
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -469,6 +481,7 @@
             background-color: rgba(0, 0, 0, 0.5);
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(5px);
         }
 
         .modal-content {
@@ -480,6 +493,19 @@
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
+            box-shadow: var(--shadow-lg);
+            animation: modalZoomIn 0.3s ease;
+        }
+
+        @keyframes modalZoomIn {
+            from {
+                transform: scale(0.95);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .close-modal {
@@ -488,6 +514,12 @@
             right: 1rem;
             font-size: 1.5rem;
             cursor: pointer;
+            color: var(--light-text);
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--danger);
         }
 
         /* Timeline */
@@ -519,7 +551,7 @@
             width: 20px;
             height: 20px;
             background-color: white;
-            border: 4px solid var(--secondary);
+            border: 4px solid var(--primary-light);
             border-radius: 50%;
             top: 2.5rem;
             left: 50%;
@@ -544,17 +576,11 @@
             left: 55%;
         }
 
-        /* Chart */
-        .chart-container {
-            height: 400px;
-            margin: 2rem 0;
-        }
-
         /* Two columns */
         .columns {
             display: flex;
-            gap: 3rem;
-            margin: 3rem 0;
+            gap: 2.5rem;
+            margin: 2.5rem 0;
             align-items: stretch;
         }
 
@@ -566,21 +592,13 @@
         .column > *:first-child {
             margin-top: 0;
         }
-        
-        .columns.align-top {
-            align-items: flex-start;
-        }
-        
-        .columns.align-center {
-            align-items: center;
-        }
 
         /* Tables */
         table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            margin: 3rem 0;
+            margin: 2rem 0;
             border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: var(--shadow);
@@ -616,14 +634,6 @@
         tr:hover {
             background-color: rgba(147, 197, 253, 0.1);
         }
-        
-        tbody tr:last-child td:first-child {
-            border-bottom-left-radius: var(--border-radius);
-        }
-        
-        tbody tr:last-child td:last-child {
-            border-bottom-right-radius: var(--border-radius);
-        }
 
         /* Quotes */
         blockquote {
@@ -631,7 +641,7 @@
             border-left: 4px solid var(--accent);
             padding: 1.5rem;
             padding-left: 2rem;
-            margin: 2.5rem 0;
+            margin: 2rem 0;
             background-color: rgba(147, 197, 253, 0.1);
             border-radius: 0 var(--border-radius) var(--border-radius) 0;
             position: relative;
@@ -658,102 +668,38 @@
             font-size: 0.9rem;
         }
 
-        /* Code */
-        pre {
-            background-color: #f5f5f5;
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            overflow-x: auto;
-            margin: 1.5rem 0;
-        }
-
-        code {
-            font-family: Consolas, Monaco, 'Andale Mono', monospace;
-        }
-
-        /* Progress */
-        .progress-container {
-            width: 100%;
-            height: 4px;
-            background-color: white;
-            position: fixed;
-            top: 0;
-            z-index: 2000;
-        }
-
-        .progress-bar {
-            height: 4px;
-            background-color: var(--accent);
-            width: 0%;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            margin: 1rem 0;
-        }
-
-        .footer-links li {
-            margin: 0 1rem;
-        }
-
-        .footer-links a {
-            color: white;
-        }
-
-        /* Scroll to top */
-        .scroll-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 50px;
-            height: 50px;
-            background-color: var(--secondary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2rem;
-            cursor: pointer;
-            opacity: 0;
-            transition: var(--transition);
-            z-index: 1000;
-        }
-
-        .scroll-top.visible {
-            opacity: 1;
-        }
-
         /* Flowchart */
         .flowchart {
             margin: 2rem 0;
             text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
         }
 
         .flowchart-item {
             display: inline-block;
             background-color: white;
-            border: 2px solid var(--secondary);
+            border: 2px solid var(--primary-light);
             padding: 1rem;
             border-radius: var(--border-radius);
             margin: 0.5rem;
             min-width: 200px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .flowchart-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
         }
 
         .flowchart-arrow {
             display: inline-block;
             font-size: 1.5rem;
-            color: var(--secondary);
+            color: var(--primary-light);
             margin: 0 0.5rem;
         }
 
@@ -761,10 +707,9 @@
         .vote-simulation {
             background-color: white;
             border-radius: var(--border-radius);
-            padding: 3rem;
+            padding: 2.5rem;
             margin: 3rem 0;
             box-shadow: var(--shadow);
-            border: 1px solid rgba(0,0,0,0.05);
         }
 
         .proposal {
@@ -773,7 +718,7 @@
             border-radius: var(--border-radius);
             margin-bottom: 2rem;
             border-left: 4px solid var(--primary);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow-sm);
             position: relative;
         }
         
@@ -802,7 +747,7 @@
 
         .vote-buttons {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
             margin: 1.5rem 0;
         }
 
@@ -812,8 +757,8 @@
             background-color: #f8fafc;
             border-radius: var(--border-radius);
             padding: 1.5rem;
-            border: 1px solid rgba(0,0,0,0.05);
             animation: fadeIn 0.5s ease forwards;
+            box-shadow: var(--shadow-sm);
         }
 
         .vote-bar {
@@ -827,7 +772,7 @@
 
         .vote-progress {
             height: 100%;
-            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            background: linear-gradient(90deg, var(--primary-light), var(--primary));
             width: 0%;
             transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
@@ -848,21 +793,20 @@
             background-color: white;
             padding: 1rem;
             border-radius: var(--border-radius);
-            border-left: 3px solid var(--secondary);
+            border-left: 3px solid var(--primary-light);
             font-style: italic;
             margin-top: 1rem;
         }
 
-        /* DAO Constitution Simulator */
+        /* Constitution Simulator */
         .constitution-simulator {
             background-color: white;
             border-radius: var(--border-radius);
-            padding: 3rem;
+            padding: 2.5rem;
             margin: 3rem 0;
             box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.05);
         }
         
         .constitution-simulator::before {
@@ -887,14 +831,15 @@
             font-family: 'Courier New', monospace;
             line-height: 1.5;
             font-size: 0.95rem;
-            color: #334155;
+            color: var(--text);
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
+            position: relative;
         }
         
         .editor:focus {
             outline: none;
-            border-color: var(--secondary);
+            border-color: var(--primary-light);
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
         }
         
@@ -920,7 +865,7 @@
         /* Case Study Box */
         .case-study {
             background-color: #f8fafc;
-            border-left: 5px solid var(--secondary);
+            border-left: 5px solid var(--primary-light);
             padding: 2.5rem;
             margin: 3rem 0;
             border-radius: 0 var(--border-radius) var(--border-radius) 0;
@@ -936,7 +881,7 @@
             right: 1rem;
             font-size: 0.75rem;
             font-weight: 700;
-            color: var(--secondary);
+            color: var(--primary-light);
             opacity: 0.5;
             letter-spacing: 0.1em;
         }
@@ -948,6 +893,94 @@
             border-bottom: 2px solid rgba(59, 130, 246, 0.2);
             padding-bottom: 0.75rem;
             margin-bottom: 1.5rem;
+        }
+
+        /* Progress bar */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: transparent;
+            z-index: 1001;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--primary-light));
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 1rem 0;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: white;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            text-decoration: none;
+        }
+
+        /* Scroll to top */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-light);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .scroll-top:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Responsive */
@@ -966,9 +999,10 @@
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background-color: var(--primary);
+                background-color: var(--dark);
                 flex-direction: column;
                 padding: 1rem 0;
+                box-shadow: var(--shadow);
             }
 
             .nav-links.show {
@@ -1037,15 +1071,15 @@
             <div class="hero-content">
                 <h1>Reconceptualizing Constitutionalism for the Digital Era</h1>
                 <p>An Exploratory Study of Governance Architectures for Decentralized Autonomous Organizations (DAOs) and Subsequent Network States</p>
-                <div>
-                    <a href="#intro" class="btn">Begin Exploration</a>
-                    <button class="btn btn-secondary" id="open-abstract">Read Abstract</button>
+                <div class="hero-buttons">
+                    <a href="#intro" class="btn"><i class="fas fa-arrow-down"></i> Begin Exploration</a>
+                    <button class="btn btn-secondary" id="open-abstract"><i class="fas fa-file-alt"></i> Read Abstract</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="intro">
+    <section id="intro" class="fade-in">
         <div class="container">
             <div class="section-header">
                 <h2>Introduction</h2>
@@ -1097,7 +1131,7 @@
         </div>
     </section>
 
-    <section id="daos">
+    <section id="daos" class="fade-in">
         <div class="container">
             <div class="section-header">
                 <h2>Decentralized Autonomous Organizations (DAOs)</h2>
@@ -1458,7 +1492,7 @@ Article VI: Constitutional Amendment
         </div>
     </section>
 
-    <section id="network-states">
+    <section id="network-states" class="fade-in">
         <div class="container">
             <div class="section-header">
                 <h2>Network States</h2>
@@ -1645,7 +1679,7 @@ Article VI: Constitutional Amendment
         </div>
     </section>
 
-    <section id="constitutional-design">
+    <section id="constitutional-design" class="fade-in">
         <div class="container">
             <div class="section-header">
                 <h2>Constitutional Design for Digital Governance</h2>
@@ -1893,7 +1927,7 @@ Article VI: Constitutional Amendment
         </div>
     </section>
 
-    <section id="legal-challenges">
+    <section id="legal-challenges" class="fade-in">
         <div class="container">
             <div class="section-header">
                 <h2>Legal Challenges in the Digital Constitutional Space</h2>
@@ -2048,7 +2082,7 @@ Article VI: Constitutional Amendment
         </div>
     </section>
 
-    <section id="case-studies">
+    <section id="case-studies" class="fade-in">
         <div class="container">
             <div class="section-header">
                 <h2>Case Studies in Digital Constitutionalism</h2>
@@ -2147,7 +2181,7 @@ Article VI: Constitutional Amendment
         </div>
     </section>
 
-    <section id="conclusion">
+    <section id="conclusion" class="fade-in">
         <div class="container">
             <div class="section-header">
                 <h2>Conclusion</h2>
@@ -2230,7 +2264,7 @@ Article VI: Constitutional Amendment
         <div class="container">
             <p>&copy; 2025 Digital Constitutionalism Research Project</p>
             <ul class="footer-links">
-                <li><a href="#intro">About</a></li>
+                <li><a href="#intro">Introduction</a></li>
                 <li><a href="#daos">DAOs</a></li>
                 <li><a href="#network-states">Network States</a></li>
                 <li><a href="#constitutional-design">Constitutional Design</a></li>
@@ -2241,6 +2275,22 @@ Article VI: Constitutional Amendment
     </footer>
 
     <script>
+        // Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+
         // Progress bar
         window.onscroll = function() {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
@@ -2324,7 +2374,7 @@ Article VI: Constitutional Amendment
                 this.textContent = "Hide Analysis";
             } else {
                 analysis.style.display = "none";
-                this.textContent = "Analyze Constitutional Principles";
+                this.textContent = "Comprehensive Constitutional Analysis";
             }
         });
 
@@ -2354,10 +2404,10 @@ Article VI: Constitutional Amendment
                 
                 if (yesPercentValue > noPercentValue) {
                     resultText.textContent = "Proposal Passed";
-                    resultText.style.color = "#28a745";
+                    resultText.style.color = "var(--success)";
                 } else {
                     resultText.textContent = "Proposal Rejected";
-                    resultText.style.color = "#dc3545";
+                    resultText.style.color = "var(--danger)";
                 }
                 
                 // Different analysis based on voting type
@@ -2399,6 +2449,22 @@ Article VI: Constitutional Amendment
         setupVoting("yes-vote-1", "no-vote-1", "vote-result-1", "result-text-1", "yes-percent-1", "no-percent-1", "vote-progress-1", "vote-analysis-1", "token");
         setupVoting("yes-vote-2", "no-vote-2", "vote-result-2", "result-text-2", "yes-percent-2", "no-percent-2", "vote-progress-2", "vote-analysis-2", "quadratic");
         setupVoting("yes-vote-3", "no-vote-3", "vote-result-3", "result-text-3", "yes-percent-3", "no-percent-3", "vote-progress-3", "vote-analysis-3", "conviction");
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                if (document.querySelector('.nav-links').classList.contains('show')) {
+                    document.querySelector('.nav-links').classList.remove('show');
+                }
+            });
+        });
     </script>
 </body>
 </html>
