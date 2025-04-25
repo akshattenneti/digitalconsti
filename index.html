@@ -1,0 +1,1971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Constitutionalism: DAOs and Network States</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary: #285a94;
+            --secondary: #4a90e2;
+            --accent: #8ab4f8;
+            --background: #f5f7fa;
+            --dark: #2c3e50;
+            --text: #333;
+            --light-text: #666;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: var(--primary);
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+            color: var(--dark);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            font-weight: 500;
+        }
+
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+
+        section:nth-child(even) {
+            background-color: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            display: inline-block;
+        }
+
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            margin: 2rem 0;
+        }
+
+        .tabs-header {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+        }
+
+        .tab-button.active {
+            color: var(--secondary);
+            border-bottom-color: var(--secondary);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--accent);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            padding: 2rem 0;
+            position: relative;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--secondary);
+            border-radius: 50%;
+            top: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .timeline-content {
+            position: relative;
+            width: 45%;
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            left: 55%;
+        }
+
+        /* Chart */
+        .chart-container {
+            height: 400px;
+            margin: 2rem 0;
+        }
+
+        /* Two columns */
+        .columns {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .column {
+            flex: 1;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 500;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        /* Quotes */
+        blockquote {
+            font-style: italic;
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        /* Code */
+        pre {
+            background-color: #f5f5f5;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+        }
+
+        /* Progress */
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background-color: white;
+            position: fixed;
+            top: 0;
+            z-index: 2000;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background-color: var(--accent);
+            width: 0%;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .footer-links li {
+            margin: 0 1rem;
+        }
+
+        .footer-links a {
+            color: white;
+        }
+
+        /* Scroll to top */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 1000;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+        }
+
+        /* Flowchart */
+        .flowchart {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .flowchart-item {
+            display: inline-block;
+            background-color: white;
+            border: 2px solid var(--secondary);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin: 0.5rem;
+            min-width: 200px;
+        }
+
+        .flowchart-arrow {
+            display: inline-block;
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin: 0 0.5rem;
+        }
+
+        /* Vote Simulation */
+        .vote-simulation {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .proposal {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+        }
+
+        .vote-buttons {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .vote-result {
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .vote-bar {
+            height: 30px;
+            background-color: #f5f5f5;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .vote-progress {
+            height: 100%;
+            background-color: var(--secondary);
+            width: 0%;
+            transition: width 1s ease;
+        }
+
+        /* DAO Constitution Simulator */
+        .constitution-simulator {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .editor {
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            min-height: 200px;
+            margin: 1rem 0;
+        }
+
+        /* Case Study Box */
+        .case-study {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .case-study h3 {
+            margin-top: 0;
+            color: var(--secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                flex-direction: column;
+                padding: 1rem 0;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 0;
+                text-align: center;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .columns {
+                flex-direction: column;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 80px);
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                left: 80px;
+            }
+
+            .timeline-item::after {
+                left: 31px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">DigitalConsti</div>
+                <ul class="nav-links">
+                    <li><a href="#intro">Introduction</a></li>
+                    <li><a href="#daos">DAOs</a></li>
+                    <li><a href="#network-states">Network States</a></li>
+                    <li><a href="#constitutional-design">Constitutional Design</a></li>
+                    <li><a href="#legal-challenges">Legal Challenges</a></li>
+                    <li><a href="#case-studies">Case Studies</a></li>
+                    <li><a href="#conclusion">Conclusion</a></li>
+                </ul>
+                <div class="mobile-menu" id="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Reconceptualizing Constitutionalism for the Digital Era</h1>
+                <p>An Exploratory Study of Governance Architectures for Decentralized Autonomous Organizations (DAOs) and Subsequent Network States</p>
+                <div>
+                    <a href="#intro" class="btn">Begin Exploration</a>
+                    <button class="btn btn-secondary" id="open-abstract">Read Abstract</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="intro">
+        <div class="container">
+            <div class="section-header">
+                <h2>Introduction</h2>
+            </div>
+            <p>This research explores the intersection of constitutional law principles and emerging digital governance structures, specifically Decentralized Autonomous Organizations (DAOs) and network states. As our course on Comparative Public Law examines the evolution of constitutionalism across different legal cultures, this study extends that analysis into the rapidly developing realm of blockchain-based governance.</p>
+            
+            <div class="columns">
+                <div class="column">
+                    <h3>Research Context</h3>
+                    <p>Traditional constitutions are being challenged by digital spaces that operate beyond geographic boundaries and traditional state frameworks. This exploration examines how constitutional principles might adapt to these new realities.</p>
+                    <p>The digital realm introduces unique challenges to established constitutional theories - from sovereignty and legitimacy to the protection of rights and the separation of powers - requiring us to reimagine constitutional design for entities that exist primarily as code and community rather than within territorial borders.</p>
+                </div>
+                <div class="column">
+                    <h3>Course Relevance</h3>
+                    <p>This research aligns with several core modules in our Comparative Public Law curriculum:</p>
+                    <ul>
+                        <li><strong>Module II:</strong> The Idea of Public Law in Major Legal Cultures - extends analysis to digital legal cultures</li>
+                        <li><strong>Module III:</strong> Constitutions and Constitutionalism - examines how digital spaces reconceptualize constitutional principles</li>
+                        <li><strong>Module IV:</strong> Establishing Constitutional Orders - explores novel paths to constitutional legitimacy in DAOs</li>
+                        <li><strong>Module V:</strong> Structural Issues of Separation of Powers - analyzes how DAOs implement governance checks and balances</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3>Research Questions</h3>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Constitutional Adaptation</h3>
+                    <p>How can traditional principles of constitutionalism be adapted and applied to DAOs, considering their decentralized nature and code-based governance?</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h3>Legal Challenges</h3>
+                    <p>What procedural and substantive legal challenges do DAOs face in the digital space, and how might insights from constitutional thinkers address them?</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Future Directions</h3>
+                    <p>What are the future directions for digital constitutionalism, specifically regarding the balance between technological innovation and legal order?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="daos">
+        <div class="container">
+            <div class="section-header">
+                <h2>Decentralized Autonomous Organizations (DAOs)</h2>
+            </div>
+            
+            <h3>Defining DAOs</h3>
+            <div class="columns">
+                <div class="column">
+                    <p>A Decentralized Autonomous Organization (DAO) is an entity represented by rules encoded as computer programs called smart contracts that are transparent, governed by its members, and uninfluenced by central authorities. As defined by Vitalik Buterin, DAOs enable groups to unite around missions or objectives and coordinate using automated enforcement mechanisms on blockchain networks.</p>
+                    <blockquote>
+                        "DAOs are an emergent organization structure that is prevalent in the ecosystem of the Ethereum blockchain. DAOs enable a group to unite around a mission or objective and coordinate using smart contracts, which are enforced immutably and autonomously on the blockchain."
+                        <cite>— Vitalik Buterin, co-founder of Ethereum</cite>
+                    </blockquote>
+                </div>
+                <div class="column">
+                    <div class="card">
+                        <h3>Key Characteristics of DAOs</h3>
+                        <ul>
+                            <li><strong>Decentralization:</strong> No central authority controls the organization</li>
+                            <li><strong>Autonomy:</strong> Operations occur through self-executing smart contracts</li>
+                            <li><strong>Transparency:</strong> All rules and transactions are visible on the blockchain</li>
+                            <li><strong>Token-based governance:</strong> Decision-making power distributed across members</li>
+                            <li><strong>Borderless:</strong> Operating across jurisdictional boundaries</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Constitutional Foundations of DAOs</h3>
+            
+            <div class="tabs">
+                <div class="tabs-header">
+                    <button class="tab-button active" data-tab="tab1">Membership Models</button>
+                    <button class="tab-button" data-tab="tab2">Governance Structures</button>
+                    <button class="tab-button" data-tab="tab3">Legal Recognition</button>
+                </div>
+                
+                <div id="tab1" class="tab-content active">
+                    <h4>DAO Membership Models</h4>
+                    <p>Membership in DAOs can be obtained through two primary methods:</p>
+                    
+                    <div class="columns">
+                        <div class="column">
+                            <h5>Token-Based Membership</h5>
+                            <p>In token-based DAOs:</p>
+                            <ul>
+                                <li>Members receive tokens conferring voting rights proportional to holdings</li>
+                                <li>Tokens can be acquired through participation, contribution, or purchase</li>
+                                <li>Members can freely exit by selling tokens on open markets</li>
+                                <li>These DAOs often operate as permissionless, borderless entities</li>
+                            </ul>
+                            <p><strong>Examples:</strong> MakerDAO, Compound, Uniswap</p>
+                        </div>
+                        <div class="column">
+                            <h5>Share-Based Membership</h5>
+                            <p>In share-based DAOs:</p>
+                            <ul>
+                                <li>Prospective members must apply to join by offering tribute</li>
+                                <li>Shares represent ownership and direct voting power</li>
+                                <li>Members can redeem shares for proportional treasury assets upon leaving</li>
+                                <li>More defined membership with clearer governance boundaries</li>
+                            </ul>
+                            <p><strong>Examples:</strong> MolochDAO, MetaCartel, DAOhaus</p>
+                        </div>
+                    </div>
+                    
+                    <p>These membership structures raise important constitutional questions about citizenship, representation, and participation rights in digital governance structures.</p>
+                </div>
+                
+                <div id="tab2" class="tab-content">
+                    <h4>DAO Governance Structures</h4>
+                    
+                    <p>DAOs implement various governance mechanisms that parallel traditional constitutional structures:</p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Governance Mechanism</th>
+                                <th>Constitutional Parallel</th>
+                                <th>Implementation in DAOs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Proposal Systems</td>
+                                <td>Legislative Functions</td>
+                                <td>Members submit proposals for community vote, similar to legislative bills</td>
+                            </tr>
+                            <tr>
+                                <td>Voting Systems</td>
+                                <td>Democratic Processes</td>
+                                <td>On-chain voting with various methods (one-token-one-vote, quadratic, conviction)</td>
+                            </tr>
+                            <tr>
+                                <td>Smart Contract Execution</td>
+                                <td>Executive Functions</td>
+                                <td>Automatic implementation of approved proposals through code</td>
+                            </tr>
+                            <tr>
+                                <td>Dispute Resolution</td>
+                                <td>Judicial Functions</td>
+                                <td>Mechanisms like Aragon Court or Kleros for resolving governance conflicts</td>
+                            </tr>
+                            <tr>
+                                <td>Delegation Systems</td>
+                                <td>Representative Democracy</td>
+                                <td>Members can delegate voting power to trusted representatives</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <p>As Tan et al. (2024) note in their analysis of 25 DAO constitutions, these governance structures often blend textual declarations with smart contract implementations, creating a unique hybrid form of constitutionalism where "code is law" but human interpretation remains essential.</p>
+                </div>
+                
+                <div id="tab3" class="tab-content">
+                    <h4>Legal Recognition of DAOs</h4>
+                    
+                    <p>The legal status of DAOs varies significantly across jurisdictions, creating a complex landscape for constitutional recognition:</p>
+                    
+                    <div class="columns">
+                        <div class="column">
+                            <h5>Wyoming DAO Law</h5>
+                            <p>Wyoming enacted legislation in 2021 recognizing DAOs as a type of Limited Liability Company (LLC), providing:</p>
+                            <ul>
+                                <li>Legal personhood for DAOs</li>
+                                <li>Limited liability for members</li>
+                                <li>Requirements for articles of organization</li>
+                                <li>Provisions for smart contract governance</li>
+                            </ul>
+                            <p>This represents a significant step toward integrating DAOs into existing legal frameworks while acknowledging their unique governance characteristics.</p>
+                        </div>
+                        <div class="column">
+                            <h5>Other Jurisdictions</h5>
+                            <ul>
+                                <li><strong>Vermont:</strong> Blockchain-based LLCs (BBLLCs) since 2018</li>
+                                <li><strong>Tennessee:</strong> Passed legislation aiming to become "the Delaware of DAOs"</li>
+                                <li><strong>Marshall Islands:</strong> Established legal structures for DAOs</li>
+                                <li><strong>Australia:</strong> Exploring creation of DAO legal entity status</li>
+                            </ul>
+                            <p>The variety of approaches demonstrates the challenge of reconciling code-based governance with traditional legal frameworks, raising federalism questions about competition between jurisdictions for DAO incorporation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="constitution-simulator">
+                <h3>DAO Constitution Simulator</h3>
+                <p>Below is an interactive simulation of a basic DAO constitution. Click the various sections to see how constitutional principles are adapted for digital governance:</p>
+                
+                <div class="tabs">
+                    <div class="tabs-header">
+                        <button class="tab-button active" data-tab="const-tab1">Preamble</button>
+                        <button class="tab-button" data-tab="const-tab2">Governance</button>
+                        <button class="tab-button" data-tab="const-tab3">Rights</button>
+                        <button class="tab-button" data-tab="const-tab4">Amendments</button>
+                    </div>
+                    
+                    <div id="const-tab1" class="tab-content active">
+                        <h4>Preamble - Constitutional Values and Principles</h4>
+                        <div class="editor" contenteditable="true">
+                            We, the members of [DAO Name], in order to form a more perfect decentralized organization, establish transparency, ensure collective governance, provide for common resources, promote the general welfare of our community, and secure the benefits of decentralization to ourselves and our digital posterity, do establish this Constitution for the [DAO Name].
+                        </div>
+                        <p><strong>Constitutional Principle:</strong> Like traditional constitutional preambles, this establishes the foundational values and purpose of the organization. It adapts language from national constitutions to the decentralized context.</p>
+                    </div>
+                    
+                    <div id="const-tab2" class="tab-content">
+                        <h4>Governance Structure - Separation of Powers</h4>
+                        <div class="editor" contenteditable="true">
+                            Article I: All governance power shall be vested in the token holders of the DAO who may exercise their power directly through voting or by delegation.
+
+                            Article II: Proposals may be submitted by any member holding at least [X] tokens. Proposals must include: purpose, technical specification, and funding requirements.
+
+                            Article III: A Governance Council of 7 members shall be elected quarterly to review proposals before community vote. The Council may not block proposals but may add advisory opinions.
+
+                            Article IV: Execution of approved proposals shall be automatic through the smart contract system. No human intervention shall be required once a proposal reaches quorum and majority approval.
+                        </div>
+                        <p><strong>Constitutional Principle:</strong> This section establishes checks and balances through a multi-stage governance process, adapting separation of powers concepts to the DAO context. It balances direct democracy with representative elements.</p>
+                    </div>
+                    
+                    <div id="const-tab3" class="tab-content">
+                        <h4>Rights and Protections - Fundamental Rights</h4>
+                        <div class="editor" contenteditable="true">
+                            Article V: Rights of Members
+
+                            1. All members have the right to propose, vote, and participate in governance proportional to their token holdings.
+                            
+                            2. All members have the right to access complete information about the DAO's operations, code, and treasury.
+                            
+                            3. No member shall have their voting rights diluted through governance actions without due process and compensation.
+                            
+                            4. All members have the right to exit the DAO by selling or redeeming their tokens without undue restriction.
+                            
+                            5. Minority token holders shall be protected from tyranny of the majority through supermajority requirements for fundamental changes.
+                        </div>
+                        <p><strong>Constitutional Principle:</strong> This bill of rights adapts traditional constitutional rights to the DAO context, protecting member participation, transparency, due process, and minority rights against majority overreach.</p>
+                    </div>
+                    
+                    <div id="const-tab4" class="tab-content">
+                        <h4>Amendment Process - Constitutional Evolution</h4>
+                        <div class="editor" contenteditable="true">
+                            Article VI: Amendments
+
+                            1. This Constitution may be amended through a proposal that receives:
+                               a) A quorum of at least 67% of all voting power
+                               b) Approval by at least 75% of votes cast
+                               c) A minimum 14-day voting period
+                            
+                            2. Constitutional amendments cannot:
+                               a) Remove or diminish rights guaranteed in Article V
+                               b) Change the amendment process to lower these thresholds
+                               c) Transfer treasury assets without specific allocation
+                            
+                            3. All amendments must be subject to a 48-hour timelock before implementation to allow member review and potential exit.
+                        </div>
+                        <p><strong>Constitutional Principle:</strong> This section addresses the constitutional challenge identified by Kurt Gödel regarding procedural perversity by establishing both amendment procedures and substantive limits on amendments to prevent governance capture.</p>
+                    </div>
+                </div>
+                
+                <button class="btn" id="analyze-constitution">Analyze Constitutional Principles</button>
+                <div id="constitution-analysis" style="display: none;">
+                    <h4>Constitutional Analysis</h4>
+                    <p>This simulated DAO constitution demonstrates several key adaptations of traditional constitutional principles to the digital context:</p>
+                    <ul>
+                        <li><strong>Popular Sovereignty:</strong> Power derives from token holders rather than citizens of a territory</li>
+                        <li><strong>Separation of Powers:</strong> Creates distinction between proposal, review, voting, and execution phases</li>
+                        <li><strong>Fundamental Rights:</strong> Establishes inalienable rights for members that cannot be violated by majority vote</li>
+                        <li><strong>Amendment Process:</strong> Creates both procedural requirements and substantive limitations</li>
+                        <li><strong>Transparency:</strong> Elevates information access to a fundamental right, beyond most traditional constitutions</li>
+                    </ul>
+                    <p>However, the token-based governance model raises important questions about plutocratic tendencies when voting power correlates with financial stake, presenting a challenge not fully resolved in this constitutional design.</p>
+                </div>
+            </div>
+            
+            <h3>Comparing Traditional and DAO Governance</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Characteristic</th>
+                        <th>Traditional Political Entities</th>
+                        <th>DAOs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Governance Structure</td>
+                        <td>Constitution and laws; separation of powers</td>
+                        <td>Smart contracts and code; decentralized decision-making</td>
+                    </tr>
+                    <tr>
+                        <td>Participation</td>
+                        <td>Citizenship or legal residency required; voting rights may be restricted</td>
+                        <td>Open participation through token ownership; all token holders can vote</td>
+                    </tr>
+                    <tr>
+                        <td>Rule of Law</td>
+                        <td>Laws enforced by government; judicial interpretation</td>
+                        <td>"Code is law," automatically enforced; predefined dispute resolution</td>
+                    </tr>
+                    <tr>
+                        <td>Transparency</td>
+                        <td>Varying degrees, subject to laws; information asymmetries</td>
+                        <td>Fully transparent; all transactions on blockchain</td>
+                    </tr>
+                    <tr>
+                        <td>Centralization</td>
+                        <td>Potential power concentration; checks and balances</td>
+                        <td>Decentralized power structure; no single point of control</td>
+                    </tr>
+                    <tr>
+                        <td>Adaptability</td>
+                        <td>Amendments possible but slow and politically challenging</td>
+                        <td>Governance rules in code; changes require consensus</td>
+                    </tr>
+                    <tr>
+                        <td>Jurisdiction</td>
+                        <td>Geographically defined borders</td>
+                        <td>Borderless, global reach</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="network-states">
+        <div class="container">
+            <div class="section-header">
+                <h2>Network States</h2>
+            </div>
+            
+            <div class="columns">
+                <div class="column">
+                    <h3>Defining Network States</h3>
+                    <p>Building upon the foundation of DAOs, network states represent an evolution in digital governance structures. As conceptualized by Balaji Srinivasan, a network state is:</p>
+                    <blockquote>
+                        "A social network with a moral innovation, a sense of national consciousness, a recognized founder, a capacity for collective action, an in-person level of civility, an integrated cryptocurrency, a consensual government limited by a social smart contract, an archipelago of crowdfunded physical territories, a virtual capital, and an on-chain census that proves a large enough population, income, and real-estate footprint to attain diplomatic recognition from pre-existing states."
+                        <cite>— Balaji Srinivasan, The Network State</cite>
+                    </blockquote>
+                    <p>Network states represent a fundamental challenge to the traditional Westphalian nation-state system, as they derive legitimacy and authority from voluntary participation and consensus rather than territorial control or monopoly on violence.</p>
+                </div>
+                <div class="column">
+                    <div class="card">
+                        <h3>Constitutive Elements of Network States</h3>
+                        <ul>
+                            <li><strong>Digital-First Existence:</strong> Primary identity and operations in the digital realm</li>
+                            <li><strong>Shared Purpose:</strong> United around specific values or objectives</li>
+                            <li><strong>Voluntary Membership:</strong> Opt-in citizenship rather than birth-based</li>
+                            <li><strong>Blockchain Governance:</strong> Built on DAO infrastructure for decision-making</li>
+                            <li><strong>Physical Manifestation:</strong> Eventually acquiring territorial outposts</li>
+                            <li><strong>Pursuit of Recognition:</strong> Seeking sovereignty in the international system</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>From DAOs to Network States: The Evolution</h3>
+            
+            <div class="flowchart">
+                <div class="flowchart-item">Online Communities</div>
+                <div class="flowchart-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flowchart-item">DAOs</div>
+                <div class="flowchart-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flowchart-item">Network Unions</div>
+                <div class="flowchart-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flowchart-item">Network States</div>
+            </div>
+            
+            <p>The pathway from simple online communities to full network states represents an evolution in digital governance complexity, capability, and constitutional status. This progression challenges traditional constitutional theory by demonstrating how non-territorial communities can develop increasingly sophisticated governance structures that parallel and eventually compete with nation-states.</p>
+            
+            <h3>Constitutional Implications</h3>
+            
+            <div class="tabs">
+                <div class="tabs-header">
+                    <button class="tab-button active" data-tab="ns-tab1">Sovereignty</button>
+                    <button class="tab-button" data-tab="ns-tab2">Citizenship</button>
+                    <button class="tab-button" data-tab="ns-tab3">Legitimacy</button>
+                </div>
+                
+                <div id="ns-tab1" class="tab-content active">
+                    <h4>Reconceptualizing Sovereignty</h4>
+                    <p>Network states fundamentally challenge the Westphalian concept of sovereignty, which has dominated international relations and constitutional thought since 1648. Traditional sovereignty is:</p>
+                    <ul>
+                        <li>Territorial - based on control of physical geography</li>
+                        <li>Exclusive - one sovereign per territory</li>
+                        <li>Backed by force - ultimately maintained through monopoly on violence</li>
+                    </ul>
+                    
+                    <p>Network state sovereignty, by contrast, is:</p>
+                    <ul>
+                        <li>Digital-first - primarily existing in cyberspace</li>
+                        <li>Overlapping - citizens can belong to multiple network states</li>
+                        <li>Consent-based - maintained through voluntary participation</li>
+                        <li>Algorithmic - enforced through cryptographic mechanisms</li>
+                    </ul>
+                    
+                    <p>As Ruggie (1993) noted in "Territoriality and Beyond," the exclusive alignment of sovereignty with territory was a specific historical development, not an immutable requirement. Network states represent a return to overlapping jurisdictions that characterized pre-Westphalian Europe, but enabled by digital technology rather than feudal relationships.</p>
+                </div>
+                
+                <div id="ns-tab2" class="tab-content">
+                    <h4>Digital Citizenship</h4>
+                    <p>Network states reimagine the concept of citizenship, transforming it from an accident of birth or lengthy naturalization process to a voluntary association based on shared values and purpose.</p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aspect</th>
+                                <th>Traditional Citizenship</th>
+                                <th>Network State Citizenship</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Acquisition</td>
+                                <td>Birth, naturalization, residency</td>
+                                <td>Voluntary opt-in, application, contribution</td>
+                            </tr>
+                            <tr>
+                                <td>Identity</td>
+                                <td>Physical documents, centralized verification</td>
+                                <td>Cryptographic proof, self-sovereign identity</td>
+                            </tr>
+                            <tr>
+                                <td>Exclusivity</td>
+                                <td>Often exclusive or limited dual citizenship</td>
+                                <td>Multiple, overlapping memberships possible</td>
+                            </tr>
+                            <tr>
+                                <td>Rights</td>
+                                <td>Territorially bound, state-provided</td>
+                                <td>Global, portable, contractual</td>
+                            </tr>
+                            <tr>
+                                <td>Duties</td>
+                                <td>Taxation, military service, jury duty</td>
+                                <td>Participation, stake-based contributions</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <p>This reconceptualization raises important constitutional questions about the relationship between individuals and political communities, and challenges the assumption that territorially defined citizenship is the only valid model for political organization.</p>
+                </div>
+                
+                <div id="ns-tab3" class="tab-content">
+                    <h4>Sources of Legitimacy</h4>
+                    <p>The legitimacy of network states derives from fundamentally different sources than traditional nation-states, requiring a reconceptualization of what makes a governing entity legitimate.</p>
+                    
+                    <div class="columns">
+                        <div class="column">
+                            <h5>Traditional Sources of State Legitimacy</h5>
+                            <ul>
+                                <li><strong>Historical continuity</strong> - Established presence over time</li>
+                                <li><strong>Territorial control</strong> - Effective governance of geography</li>
+                                <li><strong>International recognition</strong> - Acceptance by other states</li>
+                                <li><strong>Monopoly on violence</strong> - Ability to enforce laws</li>
+                                <li><strong>Democratic processes</strong> - Consent through elections</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h5>Network State Sources of Legitimacy</h5>
+                            <ul>
+                                <li><strong>Opt-in membership</strong> - Voluntary association</li>
+                                <li><strong>Transparent governance</strong> - Open, verifiable processes</li>
+                                <li><strong>Value alignment</strong> - Shared purpose and ethos</li>
+                                <li><strong>Service provision</strong> - Effective delivery of benefits</li>
+                                <li><strong>Cryptographic verification</strong> - Trustless operations</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <p>This shift in legitimacy sources connects to Frank Michelman's work on "Respect-Worthy Constitutions" (Balkin, 2004), which argues that constitutional legitimacy rests not merely on formal processes but on whether governance systems are worthy of citizen respect based on their substantive qualities.</p>
+                </div>
+            </div>
+            
+            <div class="case-study">
+                <h3>Case Study: Prospera (Honduras)</h3>
+                <p>While not a pure network state, Prospera in Honduras represents an early attempt to bridge digital governance with physical territory:</p>
+                <ul>
+                    <li>Established in 2020 under Honduras' ZEDE (Economic Development and Employment Zone) laws</li>
+                    <li>Incorporates blockchain governance and smart contracts into its legal framework</li>
+                    <li>Allows for significant regulatory autonomy from the host nation</li>
+                    <li>Attracts residents based on shared values rather than nationality</li>
+                    <li>Uses e-governance systems for many administrative functions</li>
+                </ul>
+                <p>Prospera illustrates both the potential and limitations of early network state concepts, particularly the challenge of establishing legitimacy within the existing international system while introducing novel governance mechanisms.</p>
+            </div>
+            
+            <h3>Constitutional Design Challenges</h3>
+            
+            <p>Network states face unique constitutional design challenges that differ from both traditional nation-states and pure DAOs:</p>
+            
+            <div class="cards">
+                <div class="card">
+                    <h4>Jurisdiction Complexity</h4>
+                    <p>Network states must navigate the interplay between digital governance and physical presence in multiple territories, each with their own legal systems. This creates multi-layered jurisdiction questions that have no clear precedent in constitutional law.</p>
+                </div>
+                <div class="card">
+                    <h4>Sovereignty Recognition</h4>
+                    <p>Without traditional territorial sovereignty, network states must develop alternative pathways to international recognition. This may require constitutional innovations that demonstrate long-term viability and capacity for diplomatic relations.</p>
+                </div>
+                <div class="card">
+                    <h4>Rights Enforcement</h4>
+                    <p>Constitutional protections in network states require enforcement mechanisms beyond code alone. Designing systems that protect rights across digital and physical domains presents novel constitutional engineering challenges.</p>
+                </div>
+                <div class="card">
+                    <h4>Governance Scalability</h4>
+                    <p>As network states grow, they must develop constitutional structures that can scale effectively while maintaining founding principles and preventing capture by powerful interests - a challenge familiar to traditional constitutionalism but with distinct technical dimensions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="constitutional-design">
+        <div class="container">
+            <div class="section-header">
+                <h2>Constitutional Design for Digital Governance</h2>
+            </div>
+            
+            <p>The emergence of DAOs and network states necessitates innovative approaches to constitutional design that can adapt traditional principles to digital governance contexts. This section explores frameworks and methodologies for designing constitutions that effectively govern decentralized digital communities.</p>
+            
+            <h3>Cybernetic Approaches to DAO Governance</h3>
+            
+            <div class="columns">
+                <div class="column">
+                    <p>Cybernetic theory offers valuable principles for designing constitutional frameworks for DAOs and network states. As Michael and Nabben (2023) argue, the application of cybernetic principles enables the creation of governance structures that are resilient, adaptable, and purpose-driven.</p>
+                    
+                    <p>The constitutional archetype in DAO governance strikes a critical balance between:</p>
+                    <ul>
+                        <li><strong>Resilience:</strong> The ability to adapt to changing circumstances</li>
+                        <li><strong>Robustness:</strong> Stability against arbitrary or harmful changes</li>
+                    </ul>
+                    
+                    <p>By constraining the "governance surface" - the parameters through which an organization's code can be modified - while not eliminating it entirely, DAOs can maintain their core purpose and values while adapting to evolving needs and challenges.</p>
+                </div>
+                <div class="column">
+                    <div class="card">
+                        <h3>Key Cybernetic Principles for DAO Constitutions</h3>
+                        <ul>
+                            <li><strong>Requisite Variety:</strong> A system must have sufficient internal variety to cope with the variety in its environment</li>
+                            <li><strong>Viability:</strong> Constitutional structures must balance stability with adaptability</li>
+                            <li><strong>Feedback Control:</strong> Governance must incorporate feedback mechanisms for self-correction</li>
+                            <li><strong>Recursive Governance:</strong> Nested decision-making structures at appropriate scales</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="case-study">
+                <h3>Case Study: 1Hive DAO Governance</h3>
+                <p>The 1Hive DAO exemplifies the constitutional archetype in action, with governance built on four pillars:</p>
+                <ol>
+                    <li><strong>Community Covenant:</strong> A constitutional document outlining the DAO's purpose and values</li>
+                    <li><strong>Decision Voting:</strong> Mechanism for modifying governance parameters within constraints</li>
+                    <li><strong>Conviction Voting:</strong> Allocating funds to projects aligned with the DAO's goals</li>
+                    <li><strong>Celeste:</strong> A decentralized dispute resolution mechanism based on the Community Covenant</li>
+                </ol>
+                <p>This structure demonstrates how a DAO can implement constitutional principles through a combination of social contracts (the Covenant) and technical mechanisms (voting systems and dispute resolution), creating a governance framework that balances flexibility with stability.</p>
+            </div>
+            
+            <h3>Constitutional Mechanisms for Decentralized Power</h3>
+            
+            <p>Effective constitutional design for DAOs and network states requires careful consideration of how power is distributed and checked across the system. Drawing from both traditional constitutional theory and cybernetic approaches, several key mechanisms emerge:</p>
+            
+            <div class="tabs">
+                <div class="tabs-header">
+                    <button class="tab-button active" data-tab="cd-tab1">Power Distribution</button>
+                    <button class="tab-button" data-tab="cd-tab2">Rights Protection</button>
+                    <button class="tab-button" data-tab="cd-tab3">Amendment Processes</button>
+                </div>
+                
+                <div id="cd-tab1" class="tab-content active">
+                    <h4>Distributing Power in Digital Constitutions</h4>
+                    
+                    <p>DAO and network state constitutions can implement power distribution through several approaches:</p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mechanism</th>
+                                <th>Traditional Application</th>
+                                <th>Digital Adaptation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Separation of Functions</td>
+                                <td>Division into legislative, executive, judicial branches</td>
+                                <td>Distinct mechanisms for proposal, voting, execution, and dispute resolution</td>
+                            </tr>
+                            <tr>
+                                <td>Federalism</td>
+                                <td>Division of powers between central and sub-national units</td>
+                                <td>Hierarchical DAOs with subsidiary governance units for specific functions</td>
+                            </tr>
+                            <tr>
+                                <td>Checks and Balances</td>
+                                <td>Each branch has powers to limit others</td>
+                                <td>Multi-signature requirements, timelocks, and guardian mechanisms</td>
+                            </tr>
+                            <tr>
+                                <td>Bicameralism</td>
+                                <td>Two legislative chambers with different representation</td>
+                                <td>Dual voting systems with different weights (token-based and reputation-based)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <p>A key innovation in digital governance is the ability to implement these power distribution mechanisms directly in code, potentially increasing their reliability compared to traditional systems that depend on human adherence to constitutional norms.</p>
+                </div>
+                
+                <div id="cd-tab2" class="tab-content">
+                    <h4>Protecting Rights in Digital Constitutions</h4>
+                    
+                    <p>Digital constitutions must address both traditional rights and novel rights specific to the digital context:</p>
+                    
+                    <div class="columns">
+                        <div class="column">
+                            <h5>Traditional Rights Adaptation</h5>
+                            <ul>
+                                <li><strong>Due Process:</strong> Fair procedures for disputes and penalties</li>
+                                <li><strong>Free Expression:</strong> Ability to propose and debate without censorship</li>
+                                <li><strong>Privacy:</strong> Protection from unwarranted surveillance</li>
+                                <li><strong>Property:</strong> Security of digital assets and tokens</li>
+                                <li><strong>Equal Protection:</strong> Non-discrimination in governance participation</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h5>Novel Digital Rights</h5>
+                            <ul>
+                                <li><strong>Algorithmic Transparency:</strong> Right to understand governance mechanisms</li>
+                                <li><strong>Data Sovereignty:</strong> Control over personal information</li>
+                                <li><strong>Exit Rights:</strong> Ability to leave with assets and data</li>
+                                <li><strong>Fork Freedom:</strong> Right to create derivative organizations</li>
+                                <li><strong>Code Verification:</strong> Ability to audit and verify smart contracts</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <p>These rights can be protected through both technical measures (code) and social mechanisms (dispute resolution systems), with constitutional design needing to specify both the rights themselves and the means of enforcement.</p>
+                </div>
+                
+                <div id="cd-tab3" class="tab-content">
+                    <h4>Constitutional Amendment and Evolution</h4>
+                    
+                    <p>Digital constitutions must balance stability with adaptability, addressing Gödel's concern about procedural perversity while enabling necessary evolution:</p>
+                    
+                    <div class="flowchart">
+                        <div class="flowchart-item">Proposal Submission<br><small>(With threshold requirements)</small></div>
+                        <div class="flowchart-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flowchart-item">Deliberation Period<br><small>(Discussion and debate)</small></div>
+                        <div class="flowchart-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flowchart-item">Supermajority Vote<br><small>(Higher threshold than normal)</small></div>
+                        <div class="flowchart-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flowchart-item">Timelock Period<br><small>(For final review)</small></div>
+                        <div class="flowchart-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flowchart-item">Implementation<br><small>(Code update)</small></div>
+                    </div>
+                    
+                    <p>Key innovations in digital constitutional amendment processes include:</p>
+                    <ul>
+                        <li><strong>Tiered Amendment Systems:</strong> Different thresholds for different types of changes</li>
+                        <li><strong>Unamendable Core Principles:</strong> Fundamental values that cannot be altered</li>
+                        <li><strong>Gradual Implementation:</strong> Phased rollout of constitutional changes</li>
+                        <li><strong>Fork Options:</strong> The ability for dissenting minorities to create their own version</li>
+                    </ul>
+                    
+                    <p>These mechanisms draw on both traditional constitutional theory about amendability and the unique affordances of blockchain technology to create more nuanced amendment processes than typically found in nation-state constitutions.</p>
+                </div>
+            </div>
+            
+            <h3>Applying Constitutional Theory to DAOs</h3>
+            
+            <div class="vote-simulation">
+                <h4>Interactive DAO Voting Simulation</h4>
+                <p>Experience how constitutional principles shape governance outcomes in DAOs:</p>
+                
+                <div class="proposal">
+                    <h5>Proposal: Change Treasury Allocation Powers</h5>
+                    <p>This proposal would modify the DAO constitution to allow the elected Council to allocate up to 10% of the treasury without full member vote, to increase operational efficiency.</p>
+                </div>
+                
+                <div class="tabs">
+                    <div class="tabs-header">
+                        <button class="tab-button active" data-tab="vote-tab1">Token-Based Voting</button>
+                        <button class="tab-button" data-tab="vote-tab2">Quadratic Voting</button>
+                        <button class="tab-button" data-tab="vote-tab3">Conviction Voting</button>
+                    </div>
+                    
+                    <div id="vote-tab1" class="tab-content active">
+                        <h5>Plutocratic Model (1 Token = 1 Vote)</h5>
+                        <p>In this model, voting power is directly proportional to token holdings.</p>
+                        
+                        <div class="vote-buttons">
+                            <button class="btn btn-success" id="yes-vote-1">Vote Yes</button>
+                            <button class="btn btn-danger" id="no-vote-1">Vote No</button>
+                        </div>
+                        
+                        <div class="vote-result" id="vote-result-1">
+                            <p><strong>Result:</strong> <span id="result-text-1"></span></p>
+                            <p>Yes: <span id="yes-percent-1">0</span>% | No: <span id="no-percent-1">0</span>%</p>
+                            <div class="vote-bar">
+                                <div class="vote-progress" id="vote-progress-1"></div>
+                            </div>
+                            <p id="vote-analysis-1"></p>
+                        </div>
+                    </div>
+                    
+                    <div id="vote-tab2" class="tab-content">
+                        <h5>Quadratic Voting Model</h5>
+                        <p>In quadratic voting, cost increases quadratically with more votes, reducing wealth concentration effects.</p>
+                        
+                        <div class="vote-buttons">
+                            <button class="btn btn-success" id="yes-vote-2">Vote Yes</button>
+                            <button class="btn btn-danger" id="no-vote-2">Vote No</button>
+                        </div>
+                        
+                        <div class="vote-result" id="vote-result-2">
+                            <p><strong>Result:</strong> <span id="result-text-2"></span></p>
+                            <p>Yes: <span id="yes-percent-2">0</span>% | No: <span id="no-percent-2">0</span>%</p>
+                            <div class="vote-bar">
+                                <div class="vote-progress" id="vote-progress-2"></div>
+                            </div>
+                            <p id="vote-analysis-2"></p>
+                        </div>
+                    </div>
+                    
+                    <div id="vote-tab3" class="tab-content">
+                        <h5>Conviction Voting Model</h5>
+                        <p>In conviction voting, voting power increases with time commitment, rewarding long-term stakeholders.</p>
+                        
+                        <div class="vote-buttons">
+                            <button class="btn btn-success" id="yes-vote-3">Vote Yes</button>
+                            <button class="btn btn-danger" id="no-vote-3">Vote No</button>
+                        </div>
+                        
+                        <div class="vote-result" id="vote-result-3">
+                            <p><strong>Result:</strong> <span id="result-text-3"></span></p>
+                            <p>Yes: <span id="yes-percent-3">0</span>% | No: <span id="no-percent-3">0</span>%</p>
+                            <div class="vote-bar">
+                                <div class="vote-progress" id="vote-progress-3"></div>
+                            </div>
+                            <p id="vote-analysis-3"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem;">
+                    <h5>Constitutional Analysis</h5>
+                    <p>This simulation demonstrates how different voting mechanisms, which function as constitutional choices, produce different governance outcomes. The design of these mechanisms reflects fundamental constitutional values:</p>
+                    <ul>
+                        <li><strong>Token-Based Voting:</strong> Prioritizes property rights and alignment of economic incentives</li>
+                        <li><strong>Quadratic Voting:</strong> Balances individual rights with protection against wealth concentration</li>
+                        <li><strong>Conviction Voting:</strong> Rewards long-term commitment and reduces governance attacks</li>
+                    </ul>
+                    <p>These constitutional design choices demonstrate how technical mechanisms in DAOs perform functions analogous to traditional constitutional structures in nation-states, but with potentially greater precision and adaptability.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="legal-challenges">
+        <div class="container">
+            <div class="section-header">
+                <h2>Legal Challenges in the Digital Constitutional Space</h2>
+            </div>
+            
+            <h3>Internet Jurisdiction and DAOs</h3>
+            
+            <div class="columns">
+                <div class="column">
+                    <p>The borderless nature of DAOs and network states poses fundamental challenges to traditional notions of jurisdiction, which are typically tied to geographic boundaries and territorial sovereignty. As McGuire (2023) argues, existing legal doctrines are insufficiently agile to address the complexities introduced by digital entities that operate beyond traditional jurisdictional boundaries.</p>
+                    
+                    <p>In the United States, personal jurisdiction is rooted in the Due Process Clause of the Constitution, which requires that a defendant have certain "minimum contacts" with the forum state such that the exercise of jurisdiction does not offend "traditional notions of fair play and substantial justice" (International Shoe Co. v. Washington, 326 U.S. 310, 1945).</p>
+                    
+                    <p>However, the application of this doctrine to cases involving internet-based activities remains uncertain, with the Supreme Court declining to address the issue in recent cases like Ford Motor Co. v. Montana Eighth Judicial District Court (141 S. Ct. 1017, 2021).</p>
+                </div>
+                <div class="column">
+                    <div class="case-study">
+                        <h3>Case Study: CFTC v. Ooki DAO</h3>
+                        <p>In a notable enforcement action, the U.S. Commodity Futures Trading Commission (CFTC) sued Ooki DAO for allegedly offering illegal derivatives products:</p>
+                        <ul>
+                            <li>The CFTC claimed jurisdiction based merely on the accessibility of Ooki's website to U.S. persons</li>
+                            <li>No allegations were made that the DAO's token holders resided in the United States</li>
+                            <li>The case raised novel questions about personal jurisdiction over decentralized entities</li>
+                            <li>The CFTC's theory effectively claimed global jurisdiction over any accessible DAO</li>
+                        </ul>
+                        <p>This case highlights the tension between traditional jurisdictional doctrines and the borderless nature of DAOs, raising significant constitutional questions about due process and fair notice.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Applying Lessons from Kurt Gödel to DAO Governance</h3>
+            
+            <p>Kurt Gödel's critique of the U.S. Constitution and his concept of "procedural perversity" offer valuable insights into the challenges of designing robust governance systems for DAOs and network states.</p>
+            
+            <div class="columns">
+                <div class="column">
+                    <h4>Gödel's Constitutional Insights</h4>
+                    <p>In preparation for his U.S. citizenship exam in 1947, Gödel identified a potential "loophole" in Article V of the U.S. Constitution, which outlines the process for amending the Constitution. As Gödel observed, since Article V does not explicitly prohibit amendments to the amendment process itself, it could theoretically be used to eliminate the safeguards against tyranny and enable the establishment of a dictatorship through legal means.</p>
+                    
+                    <p>This critique points to a fundamental challenge in constitutional design: how to prevent a governance system from being subverted or undermined by its own rules and procedures. In other words, how to guard against "procedural perversity."</p>
+                </div>
+                <div class="column">
+                    <h4>Application to DAO Governance</h4>
+                    <p>DAOs face similar risks of procedural perversity, potentially exacerbated by their reliance on smart contracts and code. For example:</p>
+                    <ul>
+                        <li><strong>Governance Capture:</strong> Large token holders could potentially modify voting rules to entrench their control</li>
+                        <li><strong>Amendment Loopholes:</strong> Poorly designed amendment processes could allow fundamental changes without adequate safeguards</li>
+                        <li><strong>Oracle Corruption:</strong> External data sources critical for governance could be manipulated</li>
+                        <li><strong>Unintended Code Behavior:</strong> Smart contracts might have unexpected vulnerabilities or edge cases</li>
+                    </ul>
+                    <p>The infamous "The DAO" hack of 2016 illustrates this risk, where an attacker exploited a vulnerability in the smart contract code to drain funds, leading to the contentious Ethereum hard fork.</p>
+                </div>
+            </div>
+            
+            <div class="case-study">
+                <h3>Case Study: The Decentraland DAO</h3>
+                <p>The Decentraland DAO governance illustrates both strengths and vulnerabilities in addressing procedural perversity:</p>
+                <ul>
+                    <li>Uses a bicameral system with a Security Advisory Board for technical oversight</li>
+                    <li>Implements timelocks on governance actions to allow community response to malicious proposals</li>
+                    <li>Requires graduated thresholds for different types of governance actions</li>
+                    <li>However, early governance was criticized for concentration of voting power</li>
+                    <li>Security Advisory Board creates potential centralization of critical governance functions</li>
+                </ul>
+                <p>This case demonstrates how DAOs must balance technical mechanisms against social governance to prevent procedural perversity, often resulting in hybrid systems rather than pure code-based governance.</p>
+            </div>
+            
+            <h3>Textualism and Originalism in DAO Governance</h3>
+            
+            <p>The constitutional interpretation theories of textualism and originalism, prominently advocated by the late Justice Antonin Scalia, provide an interesting lens through which to analyze DAO governance and smart contract interpretation.</p>
+            
+            <div class="tabs">
+                <div class="tabs-header">
+                    <button class="tab-button active" data-tab="legal-tab1">Textualist Approach</button>
+                    <button class="tab-button" data-tab="legal-tab2">Originalist Approach</button>
+                    <button class="tab-button" data-tab="legal-tab3">Implications</button>
+                </div>
+                
+                <div id="legal-tab1" class="tab-content active">
+                    <h4>Textualism in DAO Constitutions</h4>
+                    
+                    <p>Textualism, which emphasizes interpreting legal texts according to their plain meaning at the time of adoption, takes on new dimensions in the context of DAO governance where "code is law."</p>
+                    
+                    <p>In traditional constitutional interpretation, textualism involves examining:</p>
+                    <ul>
+                        <li>The ordinary meaning of the words used</li>
+                        <li>The grammatical structure and syntax</li>
+                        <li>The document as a whole, for context</li>
+                    </ul>
+                    
+                    <p>For DAOs, a textualist approach would involve:</p>
+                    <ul>
+                        <li>Strict interpretation of smart contract code functionality</li>
+                        <li>Prioritizing the literal operation of code over intended outcomes</li>
+                        <li>Examining both code and written constitutional documents in their plain meaning</li>
+                    </ul>
+                    
+                    <p>This raises the question: In a DAO where both natural language constitutions and code exist, which represents the authoritative "text" when conflicts arise? A strict textualist might argue that the code, being self-executing, represents the true "law" of the DAO.</p>
+                </div>
+                
+                <div id="legal-tab2" class="tab-content">
+                    <h4>Originalism in DAO Constitutions</h4>
+                    
+                    <p>Originalism holds that the Constitution should be interpreted according to the original understanding at the time of adoption. For DAOs, this raises fascinating questions about founder intent versus community evolution.</p>
+                    
+                    <p>Traditional originalism examines:</p>
+                    <ul>
+                        <li>The original public meaning of constitutional provisions</li>
+                        <li>The intentions of the framers and ratifiers</li>
+                        <li>Historical context to understand original meaning</li>
+                    </ul>
+                    
+                    <p>For DAOs, originalist interpretation might involve:</p>
+                    <ul>
+                        <li>Examining founder statements and whitepaper documents</li>
+                        <li>Analyzing git repositories and code comments for developer intent</li>
+                        <li>Considering community discussions leading to initial governance designs</li>
+                    </ul>
+                    
+                    <p>A key challenge for originalism in DAOs is that, unlike the U.S. Constitution which is difficult to amend, DAO governance is designed for evolution. This tension raises questions about whether initial founder intent should constrain later community decisions, particularly when the founding ethos often emphasizes progressive decentralization.</p>
+                </div>
+                
+                <div id="legal-tab3" class="tab-content">
+                    <h4>Implications for DAO Dispute Resolution</h4>
+                    
+                    <p>The application of textualism and originalism to DAO governance has significant implications for how disputes are resolved in decentralized contexts:</p>
+                    
+                    <div class="columns">
+                        <div class="column">
+                            <h5>Advantages</h5>
+                            <ul>
+                                <li><strong>Predictability:</strong> Clear interpretive rules enhance certainty</li>
+                                <li><strong>Constraint:</strong> Limits subjective or arbitrary decision-making</li>
+                                <li><strong>Legitimacy:</strong> Grounds decisions in founding documents</li>
+                                <li><strong>Stability:</strong> Maintains consistency in governance outcomes</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h5>Challenges</h5>
+                            <ul>
+                                <li><strong>Code vs. Intent:</strong> Smart contracts may not capture all nuances of intent</li>
+                                <li><strong>Evolving Norms:</strong> Community values and needs change over time</li>
+                                <li><strong>Technical Limitations:</strong> Original code may contain bugs or vulnerabilities</li>
+                                <li><strong>Contextual Shifts:</strong> Changing external environment may require adaptation</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <p>These tensions highlight why many DAOs develop hybrid governance systems that include both immutable elements (similar to constitutional entrenchment) and flexible mechanisms for adaptation and dispute resolution that can mediate between strict textualism and evolving community needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="case-studies">
+        <div class="container">
+            <div class="section-header">
+                <h2>Case Studies in Digital Constitutionalism</h2>
+            </div>
+            
+            <h3>The Wyoming DAO Experiment</h3>
+            
+            <div class="columns">
+                <div class="column">
+                    <p>Wyoming's pioneering legislation recognizing DAOs as legal entities provides a critical case study in how traditional legal systems can accommodate novel digital governance structures. In 2021, Wyoming enacted a law that recognized DAOs as a type of Limited Liability Company (LLC), creating the first comprehensive legal framework for DAOs in the United States.</p>
+                    
+                    <p>Key provisions of the Wyoming DAO LLC law include:</p>
+                    <ul>
+                        <li>Recognition of smart contracts as a means of governance</li>
+                        <li>Limited liability protection for DAO members</li>
+                        <li>Requirements for articles of organization</li>
+                        <li>Default rules that apply if smart contracts are silent</li>
+                        <li>Provisions for dispute resolution</li>
+                    </ul>
+                    
+                    <p>This legislation represents a significant step toward integrating DAOs into the existing legal framework, bridging the gap between code-based governance and traditional legal structures.</p>
+                </div>
+                <div class="column">
+                    <div class="case-study">
+                        <h3>Constitutional Implications</h3>
+                        <p>From a constitutional perspective, the Wyoming DAO law exemplifies principles of federalism and state autonomy. The U.S. Constitution's Tenth Amendment reserves powers not delegated to the federal government to the states, allowing Wyoming to exercise its state power to create innovative legal frameworks.</p>
+                        
+                        <p>However, this arrangement also creates potential tensions:</p>
+                        <ul>
+                            <li><strong>Federal Preemption:</strong> Federal securities laws may still apply to DAO tokens</li>
+                            <li><strong>Interstate Commerce:</strong> DAOs operating across state lines face complex jurisdictional questions</li>
+                            <li><strong>International Law:</strong> DAOs with global membership may be subject to conflicting legal regimes</li>
+                        </ul>
+                        
+                        <p>The Wyoming experiment illustrates both the adaptability of the American federal system and the challenges of accommodating truly borderless entities within a system designed for territorial jurisdiction.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Token Engineering and Constitutional Design</h3>
+            
+            <p>Token engineering represents a novel approach to constitutional design that seeks to align incentives through cryptoeconomic mechanisms. This discipline applies principles from mechanism design, game theory, and behavioral economics to create governance systems that encourage desired behaviors through carefully crafted incentive structures.</p>
+            
+            <div class="case-study">
+                <h3>Case Study: Maker DAO Governance</h3>
+                <p>MakerDAO provides a sophisticated example of token engineering as constitutional design:</p>
+                <ul>
+                    <li>Uses a dual-token system (MKR governance tokens and DAI stablecoins)</li>
+                    <li>MKR holders vote on risk parameters and system upgrades</li>
+                    <li>Token value is directly tied to system performance, creating aligned incentives</li>
+                    <li>Implemented a gradual transition from Foundation control to decentralized governance</li>
+                    <li>Established specialized domain teams with delegated authority</li>
+                </ul>
+                <p>MakerDAO's governance exemplifies how token engineering can create constitutional systems with sophisticated checks and balances while maintaining decentralization. The system's resilience during the 2020 crypto market crash demonstrated the effectiveness of this approach under stress.</p>
+            </div>
+            
+            <h3>Emerging Network State Experiments</h3>
+            
+            <p>While fully realized network states do not yet exist, several projects are experimenting with elements of the network state concept, providing valuable insights into the constitutional challenges and opportunities they present.</p>
+            
+            <div class="cards">
+                <div class="card">
+                    <h4>Praxis</h4>
+                    <p>Praxis is developing a network state focused on building a new city founded on shared values and governance innovations:</p>
+                    <ul>
+                        <li>Blending digital citizenship with physical community building</li>
+                        <li>Creating governance tools for community decision-making</li>
+                        <li>Developing land acquisition strategies for territorial presence</li>
+                        <li>Building digital identity and reputation systems</li>
+                    </ul>
+                    <p>Praxis illustrates the challenge of translating digital governance concepts into physical reality while maintaining coherent constitutional principles across domains.</p>
+                </div>
+                <div class="card">
+                    <h4>CityDAO</h4>
+                    <p>CityDAO purchased land in Wyoming to experiment with blockchain-based governance of physical property:</p>
+                    <ul>
+                        <li>Using NFTs to represent land ownership rights</li>
+                        <li>Creating governance processes for land use decisions</li>
+                        <li>Establishing membership tiers with different rights</li>
+                        <li>Working within existing legal frameworks while innovating</li>
+                    </ul>
+                    <p>CityDAO demonstrates how digital constitutional principles can be applied to governance of physical assets, highlighting both possibilities and limitations in the current legal environment.</p>
+                </div>
+                <div class="card">
+                    <h4>Nation3</h4>
+                    <p>Nation3 aims to build a cloud nation with its own jurisdiction for the internet economy:</p>
+                    <ul>
+                        <li>Creating a digital jurisdiction for contracts and dispute resolution</li>
+                        <li>Developing passport NFTs for citizenship</li>
+                        <li>Building a treasury for public goods funding</li>
+                        <li>Establishing governance mechanisms for policy decisions</li>
+                    </ul>
+                    <p>Nation3 focuses on creating legal infrastructure for digital activity, highlighting how network states might develop specialized governance services that complement rather than replace traditional state functions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="conclusion">
+        <div class="container">
+            <div class="section-header">
+                <h2>Conclusion</h2>
+            </div>
+            
+            <div class="columns">
+                <div class="column">
+                    <h3>Synthesis of Research Insights</h3>
+                    <p>Our exploration of DAOs and network states through the lens of constitutional law reveals several key insights:</p>
+                    <ol>
+                        <li><strong>Hybrid Constitutionalism:</strong> The most effective DAO governance structures blend code-based enforcement with human interpretation through textual constitutions, creating a new form of constitutional practice that leverages both technical precision and social consensus.</li>
+                        <li><strong>Sovereignty Reimagined:</strong> Network states challenge traditional notions of sovereignty based on territorial control, suggesting a future where sovereign entities might be defined by shared purpose and values rather than geography.</li>
+                        <li><strong>Constitutional Design Innovation:</strong> DAOs are pioneering new approaches to constitutional design that leverage mechanism design, token engineering, and cryptographic guarantees to create governance systems with novel properties.</li>
+                        <li><strong>Legal Adaptation Challenges:</strong> Traditional legal systems face significant challenges in accommodating borderless, code-based entities, though experiments like the Wyoming DAO law show potential pathways for integration.</li>
+                        <li><strong>Substantive Constitutional Values:</strong> Despite their technical novelty, DAOs and network states grapple with the same fundamental constitutional questions that have defined governance for centuries: balancing rights, distributing power, ensuring representation, and maintaining legitimacy.</li>
+                    </ol>
+                </div>
+                <div class="column">
+                    <h3>Future Directions for Digital Constitutionalism</h3>
+                    <p>As DAOs and network states continue to evolve, several promising directions for future research and development emerge:</p>
+                    <ul>
+                        <li><strong>Interoperability Frameworks:</strong> Developing constitutional principles for collaboration between DAOs, network states, and traditional legal systems</li>
+                        <li><strong>Judicial Functions:</strong> Creating more sophisticated dispute resolution systems that can interpret constitutional principles across code and social contexts</li>
+                        <li><strong>Digital Rights Expansion:</strong> Articulating and protecting a broader set of rights specific to digital governance contexts</li>
+                        <li><strong>Legitimacy Mechanisms:</strong> Exploring how digital governance systems can establish and maintain legitimacy without traditional sources of authority</li>
+                        <li><strong>Adaptive Governance:</strong> Designing constitutional systems that can evolve responsively while maintaining core principles</li>
+                    </ul>
+                    <p>These directions suggest that digital constitutionalism is not merely adapting traditional principles to new technologies, but potentially developing entirely new approaches to governance that could ultimately influence how we understand constitutional law in all contexts.</p>
+                </div>
+            </div>
+            
+            <h3>Broader Implications for Constitutional Theory</h3>
+            
+            <p>The emergence of DAOs and network states has profound implications for constitutional theory that extend beyond the digital realm:</p>
+            
+            <div class="cards">
+                <div class="card">
+                    <h4>Voluntary Association</h4>
+                    <p>DAOs demonstrate that effective governance can be built on voluntary association rather than territorial birth, challenging assumptions about the necessary foundations of constitutional legitimacy. This may influence how we understand consent and legitimacy in all governance contexts.</p>
+                </div>
+                <div class="card">
+                    <h4>Constitutional Experimentation</h4>
+                    <p>The rapid iteration and experimentation possible in DAO governance enables testing constitutional designs at unprecedented speed, potentially accelerating our understanding of effective governance mechanisms and creating knowledge that can benefit traditional constitutional systems.</p>
+                </div>
+                <div class="card">
+                    <h4>Pluralistic Sovereignty</h4>
+                    <p>Network states suggest a future where multiple forms of sovereignty might coexist, with individuals holding various forms of "citizenship" simultaneously. This could revitalize federalist and cosmopolitan theories that have struggled with territorial limitations.</p>
+                </div>
+                <div class="card">
+                    <h4>Technologically-Enforced Rights</h4>
+                    <p>Smart contracts offer the possibility of rights that are cryptographically guaranteed rather than merely legally protected, potentially changing how we think about the relationship between constitutional rights and their enforcement mechanisms.</p>
+                </div>
+            </div>
+            
+            <div class="case-study">
+                <h3>Final Thoughts</h3>
+                <p>The reconceptualization of constitutionalism for the digital era represents not just an adaptation of existing principles to new technologies, but a fundamental rethinking of how governance operates in a world where code, community, and conviction can create new forms of political organization.</p>
+                <p>As Tarunabh Khaitan and others argue in "Constitutional Resilience in South Asia" (2023), constitutional systems derive their strength not just from formal structures but from their ability to adapt while maintaining core principles. DAOs and network states are testing the boundaries of this adaptability, potentially revealing new pathways for constitutional development across all contexts.</p>
+                <p>By continuing to explore these emerging governance forms through the lens of comparative constitutional law, we can gain valuable insights not just into the future of digital governance, but into the fundamental nature of constitutionalism itself.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="abstract-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-abstract">&times;</span>
+            <h2>Abstract</h2>
+            <p>This dissertation undertakes a rigorous and comprehensive exploratory study into the nascent governance architectures of Decentralized Autonomous Organizations (DAOs) and the conceptual emergence of network states within the contemporary digital era. It probes the recontextualization of constitutionalism in the rapidly evolving landscape of digital governance and autonomous collectives, positing that the advent of DAOs necessitates a fundamental reevaluation of traditional governance principles to suit the decentralized and often borderless nature of online communities.</p>
+            <p>Employing a robust mixed-methods approach that encompasses a meticulous historical review, in-depth textual analysis, and incisive case studies, this study dissects the unique characteristics of digital constitutions, smart contracts, and the systemic governance frameworks that underpin DAOs. It reflects on the roots of constitutionalism in online spaces, tracing its trajectory from the early USENET groups to the sophisticated entities within the burgeoning Web3 ecosystem. The investigation delves into the multifaceted legal and procedural challenges these organizations face, such as personal jurisdiction issues and the adaptation of seminal principles from significant constitutional thinkers, including Kurt Gödel's seminal remarks on procedural perversity and Antonin Scalia's influential textualist approach.</p>
+            <p>The dissertation provides a critical examination of the Wyoming DAO experiment as a microcosm for understanding the complex interaction between DAOs and nation-states. Furthermore, it ventures into the realm of cybernetic and constitutional theories to propose innovative models of governance that can foster the decentralization of power, culminating in the groundbreaking concept of network states.</p>
+            <p>Strategic recommendations for the development of future DAO constitutions are presented, supported by principles gleaned from an exhaustive analysis of existing governance documents and technical publication standards. The study underscores the paramount importance of establishing robust constitutional frameworks to maintain the integrity and functionality of DAOs as they continue to amass substantial resources and wield increasing influence within the digital realm.</p>
+        </div>
+    </div>
+
+    <div class="scroll-top" id="scroll-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Digital Constitutionalism Research Project</p>
+            <ul class="footer-links">
+                <li><a href="#intro">About</a></li>
+                <li><a href="#daos">DAOs</a></li>
+                <li><a href="#network-states">Network States</a></li>
+                <li><a href="#constitutional-design">Constitutional Design</a></li>
+                <li><a href="#legal-challenges">Legal Challenges</a></li>
+            </ul>
+            <p>Presented by: [Group Members]</p>
+        </div>
+    </footer>
+
+    <script>
+        // Progress bar
+        window.onscroll = function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+            
+            // Show/hide scroll to top button
+            const scrollTop = document.getElementById("scroll-top");
+            if (winScroll > 300) {
+                scrollTop.classList.add("visible");
+            } else {
+                scrollTop.classList.remove("visible");
+            }
+        };
+
+        // Mobile menu toggle
+        document.getElementById("mobile-menu").addEventListener("click", function() {
+            document.querySelector(".nav-links").classList.toggle("show");
+        });
+
+        // Scroll to top
+        document.getElementById("scroll-top").addEventListener("click", function() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+
+        // Tabs
+        const tabButtons = document.querySelectorAll(".tab-button");
+        tabButtons.forEach(button => {
+            button.addEventListener("click", function() {
+                const tabId = this.getAttribute("data-tab");
+                
+                // Get the parent tabs container
+                const tabsContainer = this.closest(".tabs");
+                
+                // Remove active class from all tab buttons in this container
+                tabsContainer.querySelectorAll(".tab-button").forEach(btn => {
+                    btn.classList.remove("active");
+                });
+                
+                // Remove active class from all tab contents in this container
+                tabsContainer.querySelectorAll(".tab-content").forEach(content => {
+                    content.classList.remove("active");
+                });
+                
+                // Add active class to clicked tab button
+                this.classList.add("active");
+                
+                // Add active class to corresponding tab content
+                document.getElementById(tabId).classList.add("active");
+            });
+        });
+
+        // Modal
+        const abstractModal = document.getElementById("abstract-modal");
+        const openAbstractBtn = document.getElementById("open-abstract");
+        const closeAbstractBtn = document.getElementById("close-abstract");
+
+        openAbstractBtn.addEventListener("click", function() {
+            abstractModal.style.display = "flex";
+        });
+
+        closeAbstractBtn.addEventListener("click", function() {
+            abstractModal.style.display = "none";
+        });
+
+        window.addEventListener("click", function(event) {
+            if (event.target === abstractModal) {
+                abstractModal.style.display = "none";
+            }
+        });
+
+        // Constitution analyzer
+        document.getElementById("analyze-constitution").addEventListener("click", function() {
+            const analysis = document.getElementById("constitution-analysis");
+            if (analysis.style.display === "none") {
+                analysis.style.display = "block";
+                this.textContent = "Hide Analysis";
+            } else {
+                analysis.style.display = "none";
+                this.textContent = "Analyze Constitutional Principles";
+            }
+        });
+
+        // Voting simulation
+        function setupVoting(yesButtonId, noButtonId, resultId, resultTextId, yesPercentId, noPercentId, progressId, analysisId, simulationType) {
+            const yesButton = document.getElementById(yesButtonId);
+            const noButton = document.getElementById(noButtonId);
+            const result = document.getElementById(resultId);
+            const resultText = document.getElementById(resultTextId);
+            const yesPercent = document.getElementById(yesPercentId);
+            const noPercent = document.getElementById(noPercentId);
+            const progress = document.getElementById(progressId);
+            const analysis = document.getElementById(analysisId);
+            
+            let votes = { yes: 0, no: 0 };
+            
+            function updateResult() {
+                const total = votes.yes + votes.no;
+                if (total === 0) return;
+                
+                const yesPercentValue = Math.round((votes.yes / total) * 100);
+                const noPercentValue = Math.round((votes.no / total) * 100);
+                
+                yesPercent.textContent = yesPercentValue;
+                noPercent.textContent = noPercentValue;
+                progress.style.width = yesPercentValue + "%";
+                
+                if (yesPercentValue > noPercentValue) {
+                    resultText.textContent = "Proposal Passed";
+                    resultText.style.color = "#28a745";
+                } else {
+                    resultText.textContent = "Proposal Rejected";
+                    resultText.style.color = "#dc3545";
+                }
+                
+                // Different analysis based on voting type
+                if (simulationType === "token") {
+                    if (yesPercentValue > noPercentValue) {
+                        analysis.textContent = "In this token-based voting model, large token holders had significant influence. The proposal passed largely due to support from a few major stakeholders, demonstrating the plutocratic tendencies of simple token-based voting.";
+                    } else {
+                        analysis.textContent = "In this token-based voting model, despite support from some large token holders, broader community opposition defeated the proposal, showing the importance of widespread consensus even in plutocratic systems.";
+                    }
+                } else if (simulationType === "quadratic") {
+                    if (yesPercentValue > noPercentValue) {
+                        analysis.textContent = "Using quadratic voting, the proposal passed with broader community support. The quadratic cost structure reduced the influence of large token holders, allowing for more democratic outcomes that better reflect the true preferences of the community.";
+                    } else {
+                        analysis.textContent = "Using quadratic voting, the proposal was rejected despite support from some large stakeholders. This demonstrates how quadratic voting can protect against plutocratic capture by requiring much greater investment from large holders to dominate voting outcomes.";
+                    }
+                } else if (simulationType === "conviction") {
+                    if (yesPercentValue > noPercentValue) {
+                        analysis.textContent = "Under conviction voting, the proposal passed due to strong support from committed long-term stakeholders. This voting model prioritizes dedication to the project over mere token holdings, preventing short-term speculators from dictating governance.";
+                    } else {
+                        analysis.textContent = "Under conviction voting, the proposal was rejected because long-term community members opposed it. This demonstrates how conviction voting can protect DAOs against governance attacks and ensure decisions align with long-term stakeholder interests.";
+                    }
+                }
+            }
+            
+            yesButton.addEventListener("click", function() {
+                votes.yes += (simulationType === "token") ? 20 : (simulationType === "quadratic") ? 10 : 15;
+                updateResult();
+                result.style.display = "block";
+            });
+            
+            noButton.addEventListener("click", function() {
+                votes.no += (simulationType === "token") ? 10 : (simulationType === "quadratic") ? 15 : 10;
+                updateResult();
+                result.style.display = "block";
+            });
+        }
+        
+        // Set up each voting simulation
+        setupVoting("yes-vote-1", "no-vote-1", "vote-result-1", "result-text-1", "yes-percent-1", "no-percent-1", "vote-progress-1", "vote-analysis-1", "token");
+        setupVoting("yes-vote-2", "no-vote-2", "vote-result-2", "result-text-2", "yes-percent-2", "no-percent-2", "vote-progress-2", "vote-analysis-2", "quadratic");
+        setupVoting("yes-vote-3", "no-vote-3", "vote-result-3", "result-text-3", "yes-percent-3", "no-percent-3", "vote-progress-3", "vote-analysis-3", "conviction");
+    </script>
+</body>
+</html>
